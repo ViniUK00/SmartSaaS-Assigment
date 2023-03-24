@@ -1,12 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import UseEffectData from './UseEffectData';
+import UseQueryData from './UseQueryData';
+
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <QueryClientProvider client={queryClient}>
+      <View style={styles.container}>
+      <Text>///useEffect() version</Text>
+      <UseEffectData />
+      <Text>///useQuery() version</Text>
+      <UseQueryData />
       <StatusBar style="auto" />
-    </View>
+    </View>     
+    </QueryClientProvider>
+      
   );
 }
 
