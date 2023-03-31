@@ -7,10 +7,9 @@ export interface Data {
     id: number;
     avatar: string;
     phone_number: number;
-    date_of_birth: string;
 }
 
-export const url = 'https://random-data-api.com/api/v2/users?size=1&is_xml=true'
+export const url = 'https://random-data-api.com/api/v2/users?size=5&is_xml=true'
 
 const fetchUserData = async (url: string) => {
     const res = await axios.get(url);
