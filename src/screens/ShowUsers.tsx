@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { Text, View, Image, FlatList, ListRenderItemInfo } from 'react-native';
-import { Data } from "../../api/fetchUserData";
+import { Text, View, FlatList } from 'react-native';
 import styles from '../styles/ShowUsersStyles'
 import { UsersContext } from "../contexts/UsersContext";
 import User from "../components/User";
@@ -11,7 +10,6 @@ const ShowUsers: React.FC = () =>{
 
   const { usersData, isLoading } = useContext(UsersContext);
 
-    
     const headerComponent = () => {
         return(<Text style={styles.head}>Users</Text>)
     }

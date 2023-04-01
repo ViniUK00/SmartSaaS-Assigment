@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    margin: 20,
+    margin: 12,
     borderRadius:20,
-    padding:10,
+    padding:7,
     backgroundColor: '#FFF',
-    shadowOpacity:0.1
+    shadowOpacity:0.1,
+    height:110
   },
   separator: {
     height:1,
