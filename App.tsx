@@ -1,21 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { SafeAreaView,View } from 'react-native';
 import ShowUsers from './src/screens/ShowUsers';
 import styles from './src/styles/ShowUsersStyles';
-// import UseEffectData from './UseEffectData';
-// import UseQueryData from './UseQueryData';
+import { UsersProvider } from './src/contexts/UsersContext';
 
-
-const queryClient = new QueryClient();
 
 export default function App() {
   return (
     <SafeAreaView style={styles.App}>
       <View>
         <StatusBar style="auto" />
-        <ShowUsers />
+        <UsersProvider>
+          <ShowUsers />
+        </UsersProvider>
       </View>
     </SafeAreaView>
                  

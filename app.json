@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Assigment",
-    "slug": "Assigment",
+    "slug": "smartsaas-assignment",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f5ff9ea1-df87-4eda-9f3f-0df1cbee85ac"
+      }
+    },
+    "owner": "ervindev"
   }
 }
