@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
     borderRadius:100,
     height:80,
     width:80,
-    justifyConent: 'center',
-    alignItems:'center'
   },
   infoContainer:{
     flex:1,
@@ -53,14 +51,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingRight:20,
     marginRight:10,
-    marginTop:10
-  },
+    marginTop:10,
+    },
   dataText:{
     fontSize: 15,
     paddingRight:20,
     marginRight:10,
     alignItems:'flex-start',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color:"grey",
+
   }
 })
   export default styles;

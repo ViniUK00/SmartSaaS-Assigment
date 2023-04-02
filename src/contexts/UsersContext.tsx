@@ -25,7 +25,7 @@ const UsersProvider: React.FC<UsersProviderProps> = ({children}) => {
         fetchUserData(url).then((data)=>
         {setUsersData(data)
         setIsLoading(false)});
-        },[setUsersData])
+        },[url])
 
     return(
         <UsersContext.Provider value={{usersData , isLoading}}>
