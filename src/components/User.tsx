@@ -1,23 +1,30 @@
 import { View, Image, ListRenderItemInfo } from 'react-native'
 import React from 'react'
 import { Data } from '../../api/fetchUserData';
-import styles from '../styles/ShowUsersStyles';
+import styles from '../../stylesheet';
 import ShowLabelData from './ShowLabelData';
+import { Entypo,FontAwesome5,FontAwesome } from '@expo/vector-icons'; 
 
+type UserProps = { item: Data };
 
-  const User = ({ item }: ListRenderItemInfo<Data>) => (
-    <View style={styles.container}>
+const fNameIcon = <FontAwesome name="user" size={20} color="white" />
+const mailIcon = <Entypo name="mail" size={20} color="white" />
+const lNameIcon = <FontAwesome5 name="house-user" size={20} color="white" />
+const phoneIcon = <Entypo name="phone" size={20} color="white" />
+
+  const User = ({ item }: UserProps) => (
+    <View >
           <Image
-            style={styles.avatarContainer}
             source={{uri: item.avatar}}
+            style={styles.avatar}
           />
-    <View style={styles.infoContainer}>
-      <ShowLabelData label="First Name" data={item.first_name} numberOfLines={1} />
-      <ShowLabelData label="Email" data={item.email} numberOfLines={1} />
+    <View>
+      <ShowLabelData icon={fNameIcon} label="First Name" data={item.first_name}/>
+      <ShowLabelData icon={lNameIcon} label="Last Name" data={item.last_name}/>
     </View>
-    <View style={styles.infoContainer}>
-      <ShowLabelData label="Last Name" data={item.last_name} numberOfLines={1} />
-      <ShowLabelData label="Mobile" data={item.phone_number} numberOfLines={1} />
+    <View>
+      <ShowLabelData icon={mailIcon} label="Email" data={item.email} />  
+      <ShowLabelData icon={phoneIcon} label="Mobile" data={item.phone_number} />
     </View>
   </View>
     );
