@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Text, View, FlatList, Button, Pressable, ActivityIndicator, Touchable, TouchableOpacity } from 'react-native';
+import React, { useContext, useLayoutEffect, useState } from "react";
+import { Text, View, FlatList, Button, Pressable, ActivityIndicator, Touchable, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from '../../stylesheet'
 import { UsersContext } from "../contexts/UsersContext";
 import User from "../components/User";
@@ -7,6 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import changeUser from "../redux/changeUser";
 import {changeUserReduc} from "../redux/changeUser";
+import { useNavigation } from "@react-navigation/native";
 
 
 const ShowUsers: React.FC = () =>{
@@ -14,7 +15,7 @@ const ShowUsers: React.FC = () =>{
   const { usersData, isLoading } = useContext(UsersContext);
   // const [currentUserIndex, setCurrentUserIndex] = useState(0);
   // const [showResetComponent, setShowResetComponent] = useState(false);
-  // const [isDisbaled, setIsDisabled] = useState(false)
+  // const [isDisabled, setIsDisabled] = useState(false)
 
   const { currentUserIndex } = useSelector((state:any)=>state.changeUser);
   const { showResetComponent } = useSelector((state:any)=>state.changeUser);
@@ -51,8 +52,16 @@ const ShowUsers: React.FC = () =>{
     //   });
     // }
 
+    const navigation = useNavigation<any>();
+    useLayoutEffect(()=>{
+      navigation.setOptions({
+        headerShown: false,
+      })
+    },[])
+
     return (
     isLoading ? <LoadingComponent /> :
+    <SafeAreaView style={styles.App}>
       <View style={styles.App}>
     <LinearGradient colors={['#C33764','#1D2671']} style={styles.container}>
       {usersData && <User item={usersData[currentUserIndex]}/>}
@@ -62,8 +71,9 @@ const ShowUsers: React.FC = () =>{
       <Text style={styles.button__text}>Change User</Text>
     </Pressable>
       </View>
+    </SafeAreaView>
+      
   );
 };
 
-
-    export default ShowUsers;
+export default ShowUsers;

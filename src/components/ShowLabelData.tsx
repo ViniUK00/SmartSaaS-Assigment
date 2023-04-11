@@ -17,7 +17,6 @@ const ShowLabelData: React.FC<ShowLabelDataType> = ({label,data,icon}) => {
         <View style={styles.data__Container}>
           <Text style={styles.data__Text}>{data}</Text>
         </View>
-        
       </View>
     )
   }

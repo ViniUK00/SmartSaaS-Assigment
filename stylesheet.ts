@@ -2,22 +2,22 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   App:{
-    backgroundColor: '#f1f2fc',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding:8,
+    backgroundColor: '#f1f2fc',
   },
   head:{
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'black',
-    fontSize:20,
-    fontWeight: "bold",
   },
   container: {
     flex: 1,
+    paddingHorizontal:24,
     alignItems:'center',
-    justifyContent:'flex-start',
-    height:650,
-    width:340,
+    justifyContent:'center',
     borderRadius: 80,
     color: '#FFFFFF',
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   ,
   label__Container:{
     width:300,
-    padding:5,
+    padding:1,
     paddingLeft:16,
     fontSize:20,
   },
@@ -79,6 +79,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f1f2fc',
+  },
+  test: {
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 56
   }
 })
 

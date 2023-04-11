@@ -18,11 +18,9 @@ const phoneIcon = <Entypo name="phone" size={20} color="white" />
             source={{uri: item.avatar}}
             style={styles.avatar}
           />
-    <View>
+    <View style={styles.test}>
       <ShowLabelData icon={fNameIcon} label="First Name" data={item.first_name}/>
       <ShowLabelData icon={lNameIcon} label="Last Name" data={item.last_name}/>
-    </View>
-    <View>
       <ShowLabelData icon={mailIcon} label="Email" data={item.email} />  
       <ShowLabelData icon={phoneIcon} label="Mobile" data={item.phone_number} />
     </View>

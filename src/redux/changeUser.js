@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const changeUserSlice = createSlice({
   name: 'changeUser',
   initialState: {
-    currentUserIndex: 0,
+    currentUserIndex: 1,
     showResetComponent: false,
   },
   reducers: {
@@ -12,7 +12,7 @@ export const changeUserSlice = createSlice({
         state.showResetComponent = false;
         state.currentUserIndex += 1;
         const isUserCardCountLessThan10 = state.currentUserIndex >= 10
-             
+
         if (isUserCardCountLessThan10) {
             state.showResetComponent = true;
             state.currentUserIndex = 0;
