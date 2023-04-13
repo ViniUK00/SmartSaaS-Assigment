@@ -13,13 +13,13 @@ export const changeUserSlice = createSlice({
 
       switch (action.payload) {
         case 'next':
-          state.currentUserIndex++;
+          state.currentUserIndex += 1;
           if (state.currentUserIndex === 10) {
             state.currentUserIndex = 0;
           }
           break;
         case 'prev':
-          state.currentUserIndex--;
+          state.currentUserIndex -= 1;
           if (state.currentUserIndex < 0) {
             state.currentUserIndex = 0;
           }
