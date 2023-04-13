@@ -25,10 +25,8 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center',
     backgroundColor: '#1D2671',
-    height:45,
-    width:240,
-    borderRadius: 100,
-    padding:10,
+    borderRadius:100,
+    padding:16,
     margin: 10,
   },
   button__text: {
@@ -85,6 +83,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 56
+  },
+  container__Buttons:{
+    flexDirection:'row',
   }
 })
 

@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import changeUserReduc from './changeUser'
 
 
-
 const logUserId = (store) => (next) => (action) => {
     if (action.type === 'changeUser/changeUserReduc') {
       const results = next(action);
@@ -11,6 +10,7 @@ const logUserId = (store) => (next) => (action) => {
     }
     return next(action);
   };
+  
 
 export default configureStore({
   reducer: {

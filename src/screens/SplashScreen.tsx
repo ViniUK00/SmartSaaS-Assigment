@@ -1,23 +1,24 @@
-import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import LottieView from 'lottie-react-native';
+import { View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import Lottie from 'lottie-react-native';
 
-const Splash = ({navigation}:any) => {
-    const [isSplashVisible, setIsSplashVisible] = useState(true);
 
-    useEffect(() => {
-      setTimeout(() => navigation.navigate('Main'), 3000); // Show the splash screen for 5 seconds
-    }, [navigation]);
+const Splash = ({ navigation }: any) => {
+  const animationRef = useRef<Lottie>(null)
+
+  useEffect(() => {
+    setTimeout(() => navigation.navigate('Main'), 2500) // Show the splash screen for 3 seconds
+    animationRef.current?.play()
+  }, [navigation]);
+
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <LottieView
-        source={require('../../assets/splash.json')}
-        autoPlay
-        loop
-      />
+      <Lottie ref={animationRef}  source={require('../../assets/splash.json')}/>
+      {/* TODO Fix web view (works fine on iOS but not in web) */}
+      {/* <LottieView  source={require('../../assets/splash.json')}/> */}
     </View>
-  )
-}
+  );
+};
 
-export default Splash
+export default Splash;

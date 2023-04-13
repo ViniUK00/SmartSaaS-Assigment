@@ -1,49 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 export const changeUserSlice = createSlice({
   name: 'changeUser',
   initialState: {
-    currentUserIndex: 1,
-    showResetComponent: false,
+    currentUserIndex: 0,
+    // showResetComponent: false,
+    userId: null,
   },
   reducers: {
-    changeUserReduc: (state) => {
-        state.showResetComponent = false;
-        state.currentUserIndex += 1;
-        const isUserCardCountLessThan10 = state.currentUserIndex >= 10
+    changeUser: (state, action) => {
+      console.log("Action type:", action.payload , action.type)
 
-        if (isUserCardCountLessThan10) {
-            state.showResetComponent = true;
+      switch (action.payload) {
+        case 'next':
+          state.currentUserIndex++;
+          if (state.currentUserIndex === 10) {
             state.currentUserIndex = 0;
+          }
+          break;
+        case 'prev':
+          state.currentUserIndex--;
+          if (state.currentUserIndex < 0) {
+            state.currentUserIndex = 0;
+          }
+          break;
+        default:
+          break;
       }
+    },
+    userId: (state, action) => {
+      state.userId = action.payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { changeUserReduc } = changeUserSlice.actions;
+export const { changeUser, userId } = changeUserSlice.actions;
 
 export default changeUserSlice.reducer;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

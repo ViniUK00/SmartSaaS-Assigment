@@ -2,6 +2,7 @@ import React from 'react'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator';
 import SplashScreen from '../screens/SplashScreen';
+import { Platform } from 'react-native';
 
 
 export type RootStackParamList = {
@@ -11,6 +12,7 @@ export type RootStackParamList = {
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
+
 const RootNavigator = () => {
   return (
     <RootStack.Navigator initialRouteName="Splash">
@@ -19,7 +21,7 @@ const RootNavigator = () => {
           name="Splash"
           component={SplashScreen}
           options={{ headerShown: false }}
-        />
+        /> 
         <RootStack.Screen
           name="Main"
           component={TabNavigator}

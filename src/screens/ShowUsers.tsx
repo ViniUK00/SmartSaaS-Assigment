@@ -1,13 +1,12 @@
-import React, { useContext, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { Text, View, FlatList, Button, Pressable, ActivityIndicator, Touchable, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from '../../stylesheet'
 import { UsersContext } from "../contexts/UsersContext";
 import User from "../components/User";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import changeUser from "../redux/changeUser";
-import {changeUserReduc} from "../redux/changeUser";
 import { useNavigation } from "@react-navigation/native";
+import { changeUser, userId } from "../redux/changeUser";
 
 
 const ShowUsers: React.FC = () =>{
@@ -16,10 +15,9 @@ const ShowUsers: React.FC = () =>{
   // const [currentUserIndex, setCurrentUserIndex] = useState(0);
   // const [showResetComponent, setShowResetComponent] = useState(false);
   // const [isDisabled, setIsDisabled] = useState(false)
-
-  const { currentUserIndex } = useSelector((state:any)=>state.changeUser);
-  const { showResetComponent } = useSelector((state:any)=>state.changeUser);
-
+  const changeUserState = useSelector((state:any)=>state.changeUser);
+  const { currentUserIndex } = changeUserState;
+  // const { showResetComponent } = useSelector((state:any)=>state.changeUser);
   const dispatch = useDispatch();
 
     const LoadingComponent = ()=> {
@@ -59,6 +57,21 @@ const ShowUsers: React.FC = () =>{
       })
     },[])
 
+    // Initial state of the user[0] 
+    useEffect(() => {
+      usersData && dispatch(userId(usersData[0].uid));
+    }, [usersData]);
+
+    const handleUserChange = (actionType: string) => {
+      if (usersData && !isLoading) {
+        const currentUserId = usersData[currentUserIndex].uid;
+        dispatch(userId(currentUserId));
+        dispatch(changeUser(actionType));
+        console.log("Current state:", changeUserState); // Logging the state
+
+      }
+    }
+
     return (
     isLoading ? <LoadingComponent /> :
     <SafeAreaView style={styles.App}>
@@ -66,10 +79,16 @@ const ShowUsers: React.FC = () =>{
     <LinearGradient colors={['#C33764','#1D2671']} style={styles.container}>
       {usersData && <User item={usersData[currentUserIndex]}/>}
     </LinearGradient>
-    {showResetComponent && <ResetComponent />} 
-    <Pressable style={styles.button} onPress={()=>{dispatch(changeUserReduc())}}>
-      <Text style={styles.button__text}>Change User</Text>
+    {/* TODO show reset component 
+    {showResetComponent && <ResetComponent />}  */}
+    <View style={styles.container__Buttons}>
+    <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
+      <Text style={styles.button__text}>Prev User</Text>
     </Pressable>
+    <Pressable style={styles.button} onPress={()=>handleUserChange('next')}>
+      <Text style={styles.button__text}>Next User</Text>
+    </Pressable>
+    </View>
       </View>
     </SafeAreaView>
       

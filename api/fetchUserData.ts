@@ -7,6 +7,7 @@ export interface Data {
     id: number | undefined;
     avatar: string | undefined;
     phone_number: number | undefined;
+    uid: string | undefined;
 }
 
 export const url = 'https://random-data-api.com/api/v2/users?size=10'
