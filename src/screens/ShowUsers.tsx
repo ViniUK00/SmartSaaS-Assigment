@@ -7,6 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { changeUser, userId } from "../redux/changeUser";
+import { selectUID, setAvatar, setCoordinates, setEmail, setFirstName, setLastName, setPhoneNumber, setUid } from "../redux/userSlice";
 
 
 const ShowUsers: React.FC = () =>{
@@ -17,7 +18,7 @@ const ShowUsers: React.FC = () =>{
   // const [isDisabled, setIsDisabled] = useState(false)
   const changeUserState = useSelector((state:any)=>state.changeUser);
   const { currentUserIndex } = changeUserState;
-  // const { showResetComponent } = useSelector((state:any)=>state.changeUser);
+  const { showResetComponent } = useSelector((state:any)=>state.changeUser);
   const dispatch = useDispatch();
 
     const LoadingComponent = ()=> {
@@ -57,7 +58,7 @@ const ShowUsers: React.FC = () =>{
       })
     },[])
 
-    // Initial state of the user[0] 
+    // // Initial state of the user[0] 
     useEffect(() => {
       usersData && dispatch(userId(usersData[0].uid));
     }, [usersData]);
@@ -68,9 +69,16 @@ const ShowUsers: React.FC = () =>{
         dispatch(userId(currentUserId));
         dispatch(changeUser(actionType));
         console.log("Current state:", changeUserState); // Logging the state
-
+        dispatch(setFirstName(usersData[currentUserIndex].first_name))
+        dispatch(setLastName(usersData[currentUserIndex].last_name))
+        dispatch(setUid(usersData[currentUserIndex].uid))
+        dispatch(setEmail(usersData[currentUserIndex].email))
+        dispatch(setPhoneNumber(usersData[currentUserIndex].phone_number))
+        dispatch(setAvatar(usersData[currentUserIndex].avatar))
+        dispatch(setCoordinates(usersData[currentUserIndex].address))        
       }
     }
+    
 
     return (
     isLoading ? <LoadingComponent /> :
@@ -79,14 +87,10 @@ const ShowUsers: React.FC = () =>{
     <LinearGradient colors={['#C33764','#1D2671']} style={styles.container}>
       {usersData && <User item={usersData[currentUserIndex]}/>}
     </LinearGradient>
-    {/* TODO show reset component 
-    {showResetComponent && <ResetComponent />}  */}
+    {showResetComponent && <ResetComponent />}
     <View style={styles.container__Buttons}>
-    <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
-      <Text style={styles.button__text}>Prev User</Text>
-    </Pressable>
     <Pressable style={styles.button} onPress={()=>handleUserChange('next')}>
-      <Text style={styles.button__text}>Next User</Text>
+      <Text style={styles.button__text}>Choose User</Text>
     </Pressable>
     </View>
       </View>

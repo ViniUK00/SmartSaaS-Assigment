@@ -4,7 +4,7 @@ export const changeUserSlice = createSlice({
   name: 'changeUser',
   initialState: {
     currentUserIndex: 0,
-    // showResetComponent: false,
+    showResetComponent: false,
     userId: null,
   },
   reducers: {
@@ -14,13 +14,9 @@ export const changeUserSlice = createSlice({
       switch (action.payload) {
         case 'next':
           state.currentUserIndex += 1;
+          state.showResetComponent = false; // Update this line
           if (state.currentUserIndex === 10) {
-            state.currentUserIndex = 0;
-          }
-          break;
-        case 'prev':
-          state.currentUserIndex -= 1;
-          if (state.currentUserIndex < 0) {
+            state.showResetComponent = false; // Update this line
             state.currentUserIndex = 0;
           }
           break;

@@ -30,12 +30,12 @@ const TabNavigator = () => {
           if (route.name === 'Users') {
             return  (<FontAwesome name="user" size={24} color={focused ? '#1D2671' : 'gray'} />)
           } else if (route.name === 'About') {
-            return (<FontAwesome name="home" size={24} color={focused ? '#1D2671' : 'gray'} />)
+            return (<FontAwesome name="info-circle" size={24} color={focused ? '#1D2671' : 'gray'} />)
       }
     } })}
     >
-      <Tab.Screen name="About" component={About} />
       <Tab.Screen name="Users" component={ShowUsers} />
+      <Tab.Screen name="About" component={About} />
     </Tab.Navigator>
   )
 }
