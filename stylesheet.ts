@@ -22,18 +22,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   button: {
+    flex:1,
     alignItems:'center',
     justifyContent: 'center',
     backgroundColor: '#1D2671',
     borderRadius:100,
+    maxHeight:60,
     padding: 16,
     paddingLeft:64,
     paddingRight:64,
     margin: 10,
   },
   button__text: {
-    fontSize:20,
-    color: 'white',
+    fontSize:16,
+    color:'white',
+    overflow:'visible'
   },
   avatar: {
     height:150,
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
   },
   container__Buttons:{
     flexDirection:'row',
+    paddingHorizontal:10,
   }
 })
 

@@ -1,23 +1,36 @@
 import { View,Text,Image,SafeAreaView } from 'react-native'
-import React, { useContext, useLayoutEffect } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import LottieView from 'lottie-react-native';
 import { useSelector } from 'react-redux';
-import { selectAvatar, selectCoordinates, selectFirstName, selectLastName } from '../redux/userSlice';
-import User from '../components/User';
+import { selectUser } from '../redux/userSlice';
 import { UsersContext } from '../contexts/UsersContext';
 import { StyleSheet } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native';
 
 const About = () => {
+  const [loading,setLoading] = useState(true);
+  const user = useSelector(selectUser);
+  const [lat, setLat] = useState();
+  const [ lon, setLon] = useState();
   const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
       navigation.setOptions({
         headerShown: false,
       })
     },[])
+
+    console.log(user?.address.coordinates)
     
-  let loading = true
+
+    useEffect(()=>{
+      {
+        if(user){
+          setLoading(false)
+        }
+      }
+    },[user])
+  
   let region: Region = {
     latitude: 0,
     longitude: 0,
@@ -25,21 +38,15 @@ const About = () => {
     longitudeDelta: 0.0421,
   };
   
-  const fName = useSelector(selectFirstName)
-  const lName = useSelector(selectLastName)
-  const avatar = useSelector(selectAvatar)
-  const coordinates = useSelector(selectCoordinates)
-
-  if (coordinates) {
-    loading = false
-    region = {
-      latitude: coordinates.coordinates.lat,
-      longitude: coordinates.coordinates.lon,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-  }
+if (region) {
+  region = {
+    latitude: user?.address.coordinates.lat,
+    longitude: user?.address.coordinates.lon,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
 }
-
+}
+    
   
 
   return (
@@ -60,26 +67,24 @@ const About = () => {
         loop
       /> */}
           <Image
-            source={{uri: avatar }}
+            source={{uri: user.avatar }}
             style={styles.avatar}
           />
           <View style={styles.nameContainer}>
-            <Text style={styles.fName}>{fName}</Text>
-            <Text style={styles.lName}>{lName}</Text>
+            <Text style={styles.fName}>{user.first_name}</Text>
+            <Text style={styles.lName}>{user.last_name}</Text>
           </View>
-          {!loading && <MapView
+         <MapView
           region={region}
           style={styles.map}
           mapType='mutedStandard'>
           <Marker
            coordinate={{
-            latitude:coordinates.coordinates.lat,
-            longitude:coordinates.coordinates.lon
+            latitude:user.address.coordinates.lat,
+            longitude:user.address.coordinates.lon
           }}
           />
-          </MapView>}
-
-          
+          </MapView>
     </SafeAreaView>
 
   )

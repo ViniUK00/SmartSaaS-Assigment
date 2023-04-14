@@ -7,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { changeUser, userId } from "../redux/changeUser";
-import { selectUID, setAvatar, setCoordinates, setEmail, setFirstName, setLastName, setPhoneNumber, setUid } from "../redux/userSlice";
+import { setUserObject } from "../redux/userSlice";
 
 
 const ShowUsers: React.FC = () =>{
@@ -20,6 +20,8 @@ const ShowUsers: React.FC = () =>{
   const { currentUserIndex } = changeUserState;
   const { showResetComponent } = useSelector((state:any)=>state.changeUser);
   const dispatch = useDispatch();
+
+console.log(currentUserIndex)
 
     const LoadingComponent = ()=> {
       return(
@@ -58,10 +60,12 @@ const ShowUsers: React.FC = () =>{
       })
     },[])
 
+    
     // // Initial state of the user[0] 
     useEffect(() => {
-      usersData && dispatch(userId(usersData[0].uid));
+      // usersData && dispatch(userId(usersData[0].uid));
     }, [usersData]);
+
 
     const handleUserChange = (actionType: string) => {
       if (usersData && !isLoading) {
@@ -69,13 +73,7 @@ const ShowUsers: React.FC = () =>{
         dispatch(userId(currentUserId));
         dispatch(changeUser(actionType));
         console.log("Current state:", changeUserState); // Logging the state
-        dispatch(setFirstName(usersData[currentUserIndex].first_name))
-        dispatch(setLastName(usersData[currentUserIndex].last_name))
-        dispatch(setUid(usersData[currentUserIndex].uid))
-        dispatch(setEmail(usersData[currentUserIndex].email))
-        dispatch(setPhoneNumber(usersData[currentUserIndex].phone_number))
-        dispatch(setAvatar(usersData[currentUserIndex].avatar))
-        dispatch(setCoordinates(usersData[currentUserIndex].address))        
+        dispatch(setUserObject(usersData[currentUserIndex]))      
       }
     }
     
@@ -89,8 +87,11 @@ const ShowUsers: React.FC = () =>{
     </LinearGradient>
     {showResetComponent && <ResetComponent />}
     <View style={styles.container__Buttons}>
+    <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
+      <Text style={[styles.button__text]} numberOfLines={1}>Previous User</Text>
+    </Pressable>
     <Pressable style={styles.button} onPress={()=>handleUserChange('next')}>
-      <Text style={styles.button__text}>Choose User</Text>
+      <Text style={styles.button__text}>Next User</Text>
     </Pressable>
     </View>
       </View>

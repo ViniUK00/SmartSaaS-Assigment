@@ -9,17 +9,25 @@ export const changeUserSlice = createSlice({
   },
   reducers: {
     changeUser: (state, action) => {
-      console.log("Action type:", action.payload , action.type)
+      // console.log("Action type:", action.payload , action.type)
 
       switch (action.payload) {
         case 'next':
-          state.currentUserIndex += 1;
+          state.currentUserIndex++;
           state.showResetComponent = false; // Update this line
           if (state.currentUserIndex === 10) {
             state.showResetComponent = false; // Update this line
             state.currentUserIndex = 0;
           }
           break;
+        case 'prev':
+          if (state.currentUserIndex <= 0) {
+            state.showResetComponent = false; // Update this line
+            state.currentUserIndex = 0;
+          } else {
+            state.currentUserIndex--;
+           state.showResetComponent = false; // Update this line
+          }
         default:
           break;
       }
