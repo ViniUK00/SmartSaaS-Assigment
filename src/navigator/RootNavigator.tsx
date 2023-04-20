@@ -3,11 +3,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import TabNavigator from './TabNavigator';
 import SplashScreen from '../screens/SplashScreen';
 import { Platform } from 'react-native';
+import ChartScreen from '../screens/ChartScreen';
 
 
 export type RootStackParamList = {
     Main: undefined;
     Splash:undefined;
+    ChartScreen:undefined;
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -26,6 +28,13 @@ const RootNavigator = () => {
           name="Main"
           component={TabNavigator}
           options={{ headerShown: false }}
+        />
+        <RootStack.Screen 
+          name='ChartScreen'
+          component={ChartScreen}
+          options={{
+            headerShown: true,
+          }}
         />
       </RootStack.Group>
     </RootStack.Navigator>

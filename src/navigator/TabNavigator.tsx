@@ -4,10 +4,12 @@ import ShowUsers from '../screens/ShowUsers'
 import About from '../screens/About'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
+import HomeScreen from '../screens/HomeScreen'
 
 export type TabStackParamList = {
   About: undefined;
   Users: undefined;
+  Home: undefined;
 }
 
 const Tab = createBottomTabNavigator()
@@ -30,10 +32,13 @@ const TabNavigator = () => {
           if (route.name === 'Users') {
             return  (<FontAwesome name="user" size={24} color={focused ? '#1D2671' : 'gray'} />)
           } else if (route.name === 'About') {
-            return (<FontAwesome name="info-circle" size={24} color={focused ? '#1D2671' : 'gray'} />)
-      }
+            return (<FontAwesome name="info-circle" size={24} color={focused ? '#1D2671' : 'gray'} />) 
+          } else if (route.name ==='Home') {
+             return  (<FontAwesome name="home" size={24} color={focused ? '#1D2671' : 'gray'} />) 
+            }
     } })}
     >
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Users" component={ShowUsers} />
       <Tab.Screen name="About" component={About} />
     </Tab.Navigator>

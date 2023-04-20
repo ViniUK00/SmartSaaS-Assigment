@@ -13,9 +13,6 @@ import { setUserObject } from "../redux/userSlice";
 const ShowUsers: React.FC = () =>{
 
   const { usersData, isLoading } = useContext(UsersContext);
-  // const [currentUserIndex, setCurrentUserIndex] = useState(0);
-  // const [showResetComponent, setShowResetComponent] = useState(false);
-  // const [isDisabled, setIsDisabled] = useState(false)
   const changeUserState = useSelector((state:any)=>state.changeUser);
   const { currentUserIndex } = changeUserState;
   const { showResetComponent } = useSelector((state:any)=>state.changeUser);
@@ -37,21 +34,6 @@ console.log(currentUserIndex)
         </View>
       )
     }
-
-    // const changeUser = () => {
-    //   setCurrentUserIndex((prevIndex) => {
-    //     prevIndex += 1
-    //     if (prevIndex >= 10){
-    //         prevIndex = 0
-    //         setShowResetComponent(true);
-    //         setIsDisabled(true);
-    //         setTimeout(() => {setShowResetComponent(false),setIsDisabled(false)}, 3000); // Hide ResetComponent after 3 seconds
-    //     } else {
-    //         setShowResetComponent(false);
-    //     }
-    //     return prevIndex
-    //   });
-    // }
 
     const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
