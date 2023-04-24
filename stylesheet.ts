@@ -128,14 +128,20 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     cityText: {
-      fontSize: 25,
+      fontSize: 30,
+      fontWeight:'bold',
         marginTop: 5,
         marginBottom: 5,
-        color:'black',
+        color:'white',
+        textShadowColor: 'rgba(0, 0, 0, 1)',
+        textShadowOffset: { width: -1, height: 1 }, 
+        textShadowRadius: 15,
+        
       },
     cityContainer:{
       alignItems: 'center',
       justifyContent: 'flex-start',
+      marginHorizontal:75
     }
 })
 

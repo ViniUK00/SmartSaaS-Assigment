@@ -41,7 +41,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ icon, temp, feels_like, main 
     <TouchableOpacity
       onPress={()=>{ navigation.navigate('ChartScreen')}}
       style={styles.container}>
-      <LinearGradient colors={['#87CEEB', '#398dcb','#87CEEB']} style={styles.backround}>
+      <LinearGradient
+        colors={[
+          'rgba(135, 206, 235, 0.7)',
+          'rgba(57, 141, 203, 1)',
+          'rgba(135, 206, 235, 0.7)',
+            ]} style={styles.backround}>
         <View>
           
         </View>

@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3,
     elevation: 4,
+    opacity:0.9
     
   },
   labe_data_container:{

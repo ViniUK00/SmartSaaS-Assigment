@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, Pressable, ImageBackground } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { getWeather } from '../../api/fetchWeatherData';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { GOOGLE_MAPS_APIKEY } from '@env';
@@ -14,10 +14,25 @@ import Loading from '../components/Loading';
 import ExtraInfoCard from '../components/ExtraInfoCard';
 import Geocoder from 'react-native-geocoding';
 import Forecast from '../components/Forecast';
-import { current } from '@reduxjs/toolkit';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   Geocoder.init(GOOGLE_MAPS_APIKEY)
+
+  const currentTime = new Date();
+  const hours = currentTime.getHours();
+  const isDay = hours >= 6 && hours < 18;
+
+  const backgroundImage = isDay
+    ? require('../../assets/day.webp')
+    : require('../../assets/night.png')
+
+  const navigation = useNavigation<any>();
+    useLayoutEffect(()=>{
+      navigation.setOptions({
+        headerShown: false,
+      })
+    },[])
 
   const [inputText, setInputText] = useState('');
   const dispatch = useDispatch();
@@ -102,8 +117,12 @@ const HomeScreen = () => {
     
 
   return (
+    <ImageBackground
+      source={backgroundImage}
+      style={{ flex: 1 }}
+      resizeMode="cover">
     <SafeAreaView style={styles.screen}>
-      {/* <ImageBackground source={require('.')}/> */}
+
       <View style={styles.searchAndIconContainer}>
       <GooglePlacesAutocomplete
         placeholder={'Search for a city'}
@@ -127,7 +146,7 @@ const HomeScreen = () => {
         marginTop: 10,
         marginBottom: 10,
         paddingLeft:40,
-        shadowOpacity:0.2
+        shadowOpacity:0.4
       },}}
         onPress={(data, details = null) => {
           console.log('hey 2', details?.geometry.location);
@@ -153,7 +172,7 @@ const HomeScreen = () => {
       <MaterialIcons name="my-location" size={30} color='gray' />
       </Pressable>
       </View>
-      <View style={styles.cityContainer}><Text style={styles.cityText}>{city}</Text></View>
+      {weatherData && <View style={styles.cityContainer}><Text style={styles.cityText}>{city}</Text></View>}
       {weatherData?
         <View style={styles.card}>
         <WeatherCard icon={weatherData?.current.weather[0].icon} temp={weatherData?.current.temp} feels_like={weatherData?.current.feels_like} main={weatherData?.current.weather[0].main} city={''}  />
@@ -170,6 +189,7 @@ const HomeScreen = () => {
   {selectedPlace?.location && <Forecast />}
       </View> : <Loading />}
   </SafeAreaView>
+  </ImageBackground>
   );
 };
 

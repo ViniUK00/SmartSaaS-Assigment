@@ -56,7 +56,11 @@ const Forecast = () => {
   const forecastItems = forecastData?.list?.filter((_, index) => index % 8 === 0);
 
   return (
-    <LinearGradient colors={['#87CEEB', '#398dcb','#87CEEB']} style={styles.container}>
+    <LinearGradient colors={[
+      'rgba(135, 206, 235, 0.7)',
+      'rgba(57, 141, 203, 1)',
+      'rgba(135, 206, 235, 0.7)',
+        ]} style={styles.container}>
       <FlatList
         data={forecastItems}
         renderItem={renderItem}

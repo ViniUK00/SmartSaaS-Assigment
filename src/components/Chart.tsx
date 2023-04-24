@@ -7,12 +7,11 @@ import { ForecastRes } from '../types/ForecastApiResponse';
 import { useSelector } from 'react-redux';
 import { selectSelectedPlace } from '../redux/locationSlice';
 
+interface ChartProps {
+  location: ReturnType<typeof selectSelectedPlace>;
+}
 
-
-const Chart =() => {
-    const location = useSelector(selectSelectedPlace)
-    console.log('saddsaasdad',location.location.latitude)
-    
+const Chart = ({ location }: ChartProps) => {    
     const [forecastData, setForecastData] = useState<ForecastRes | undefined>();
 
     useEffect(() => {

@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     animationContainer: {
       alignItems: 'center',
       justifyContent: 'center',
-      flex: 0,
+      flex: 1,
+      marginTop:400,
     },
    
   });
