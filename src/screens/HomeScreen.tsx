@@ -15,8 +15,12 @@ import ExtraInfoCard from '../components/ExtraInfoCard';
 import Geocoder from 'react-native-geocoding';
 import Forecast from '../components/Forecast';
 import { useNavigation } from '@react-navigation/native';
+import { postUID } from '../../api/postUserData';
+import { selectUser } from '../redux/userSlice';
+import { usePostUserInfo } from '../hooks/usePostUserInfo';
 
 const HomeScreen = () => {
+  const user = useSelector(selectUser);
   Geocoder.init(GOOGLE_MAPS_APIKEY)
 
   const currentTime = new Date();
@@ -107,6 +111,26 @@ const HomeScreen = () => {
 
   const mainWeather = weatherData?.current.weather[0].main;
   console.log(mainWeather);
+
+  const changeUserState = useSelector((state:any)=>state.changeUser);
+  
+
+//  const isClear = (weather:String | undefined) =>{
+//    return weather === "Clear"
+//   }
+
+// useEffect(() => {
+//   if (user && isClear(mainWeather)) {
+//     const userInfo = [user.id, user.first_name, user.last_name];
+//     postUID(userInfo)
+//       .then((data) => console.log(data))
+//       .catch((err) => console.error(err));
+//   }
+// }, [user, mainWeather, changeUserState.userId]);
+
+
+
+
   
   Geocoder.from(lat,lng)
 		.then(json => {

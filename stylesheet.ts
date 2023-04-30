@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { isJSDocUnknownTag } from 'typescript';
 
 const styles = StyleSheet.create({
   App:{
@@ -15,23 +16,24 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingHorizontal:24,
+    paddingHorizontal:12,
     alignItems:'center',
     justifyContent:'center',
+    alignContent:'center',
+    alignSelf:'center',
     borderRadius: 80,
     color: '#FFFFFF',
+    paddingBottom:10
   },
   button: {
-    flex:1,
+    flex:0,
     alignItems:'center',
     justifyContent: 'center',
     backgroundColor: '#1D2671',
     borderRadius:100,
-    maxHeight:60,
-    padding: 16,
-    paddingLeft:64,
-    paddingRight:64,
+    padding: 10,
     margin: 10,
+    marginHorizontal:60,
   },
   button__text: {
     fontSize:16,
@@ -39,34 +41,34 @@ const styles = StyleSheet.create({
     overflow:'visible'
   },
   avatar: {
-    height:150,
-    width:150,
+    height:100,
+    width:100,
     borderRadius:50,
-    marginTop: 40,
-    marginBottom:60,
-    marginLeft:65,
+    alignContent:"center",
+    marginLeft:90
   },
 
   data__Container:{
-    width:300,
-    paddingLeft:16,
+    width:200,
     paddingTop:8,
-    paddingBottom:8,
     borderRadius:20,
-    marginBottom:20,
+    marginBottom:10,
     backgroundColor: 'white',
-    shadowOpacity:0.2
+    shadowOpacity:0.2,
+    marginLeft:50
   },
   data__Text: {
     fontSize:20,
     color: '#333333',
+    paddingLeft:10
   }
   ,
   label__Container:{
-    width:300,
+    width:260,
     padding:1,
     paddingLeft:16,
     fontSize:20,
+    marginLeft:40,
   },
   label__Text:{
     fontSize:18,
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 56
   },
   container__Buttons:{
     flexDirection:'row',
@@ -136,13 +137,37 @@ const styles = StyleSheet.create({
         textShadowColor: 'rgba(0, 0, 0, 1)',
         textShadowOffset: { width: -1, height: 1 }, 
         textShadowRadius: 15,
-        
       },
     cityContainer:{
       alignItems: 'center',
       justifyContent: 'flex-start',
       marginHorizontal:75
-    }
+    },
+    map: {
+      width: '75%',
+      height: '30%',
+      marginHorizontal: 20,
+      borderRadius:30
+  },
+  weatherIcon: {
+    height: 50,
+    width: 50,
+  },
+  weatherContainer:{
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    alignContent:'center',
+    borderRadius:30,
+    marginLeft:10,
+    marginRight:180,
+    backgroundColor: '#9D2671',
+    shadowOpacity:0.2
+  },
+  tempText:{
+    color:'white',
+    fontWeight:'bold'
+  }
 })
 
 export default styles;
