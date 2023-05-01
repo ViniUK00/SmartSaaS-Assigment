@@ -153,16 +153,20 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
+  weatherContainerView:{
+
+  },
   weatherContainer:{
     display:'flex',
     flexDirection:'row',
     alignItems:'center',
     alignContent:'center',
     borderRadius:30,
-    marginLeft:10,
+    marginLeft:14,
     marginRight:180,
-    backgroundColor: '#9D2671',
-    shadowOpacity:0.2
+    backgroundColor: 'rgba(157,38,113,0.7)',
+    shadowOpacity:0.4,
+    margin:14
   },
   tempText:{
     color:'white',

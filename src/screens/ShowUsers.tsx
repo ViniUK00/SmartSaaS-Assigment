@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
-import { Text, View, FlatList, Button,Image, Pressable, ActivityIndicator, Touchable, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
+import React, { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Text, View, FlatList, Button,Image, Pressable, ActivityIndicator, Touchable, TouchableOpacity, SafeAreaView, ScrollView, Animated } from 'react-native';
 import styles from '../../stylesheet'
 import { UsersContext } from "../contexts/UsersContext";
 import User from "../components/User";
@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { changeUser, userId } from "../redux/changeUser";
 import { selectUser, setUserObject } from "../redux/userSlice";
-import axios from "axios";
-import MapView, { Marker, Region } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { AntDesign } from '@expo/vector-icons';
 import { Weather } from "../types/WeatherApiResponse";
 import { getWeather } from "../../api/fetchWeatherData";
@@ -62,7 +61,8 @@ const ShowUsers: React.FC = () =>{
         dispatch(userId(currentUserId));
         dispatch(changeUser(actionType));
         console.log("Current state:", changeUserState);
-        dispatch(setUserObject(usersData[currentUserIndex]))      
+        dispatch(setUserObject(usersData[currentUserIndex]))
+        fadeAnim.setValue(0);      
       }
     }
 
@@ -78,7 +78,7 @@ const ShowUsers: React.FC = () =>{
         longitude: usersData[currentUserIndex].address.coordinates.lng,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,})
-    },[])
+    },[usersData,currentUserIndex])
     
 
     // Start changes
@@ -86,18 +86,29 @@ const ShowUsers: React.FC = () =>{
     useEffect(() => {
       const fetchWeather = async () => {
         try {
-          const data = await getWeather(usersData[currentUserIndex].address.coordinates.lat, usersData[currentUserIndex].address.coordinates.lng);
+          const data = await getWeather(usersData?.[currentUserIndex]?.address?.coordinates?.lat, usersData?.[currentUserIndex]?.address?.coordinates?.lng);
           setWeatherData(data);
         } catch (error) {
           console.log(error);
         }
       };
       fetchWeather();
-    },[usersData[currentUserIndex]]);
+    },[usersData?.[currentUserIndex]]);
 
-    usePostUserInfo(usersData[currentUserIndex], weatherData?.current.weather[0].main);
+    console.log(usersData?.[currentUserIndex].address.coordinates);
     
+
+    usePostUserInfo(usersData?.[currentUserIndex], weatherData?.current.weather[0].main);
     
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+      Animated.timing(fadeAnim, {
+        toValue: 10,
+        duration: 10000,
+        useNativeDriver: true,
+      }).start();
+    }, [currentUserIndex]);
     // End
 
     
@@ -107,15 +118,15 @@ const ShowUsers: React.FC = () =>{
     <SafeAreaView style={styles.App}>
       <View style={styles.App}>
     <LinearGradient colors={['#C33764','#1D2671']} style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {usersData && <User item={usersData[currentUserIndex]}/>}
       </ScrollView>
     </LinearGradient>
     {showResetComponent && <ResetComponent />}
       </View>
-      <MapView
+      <MapView.Animated
           region={region}
-          style={styles.map}
+          style={[styles.map,{opacity: fadeAnim}]}
           mapType='mutedStandard'>
           <Marker
            coordinate={{
@@ -132,9 +143,7 @@ const ShowUsers: React.FC = () =>{
       />
       {weatherData && <Text style={styles.tempText}>{`${(weatherData?.current.temp - 273.15).toFixed(0)}°C`}</Text>}
           </View>
-          
-          </MapView>
-
+          </MapView.Animated>
           <View style={styles.container__Buttons}>
     <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
       <AntDesign name="caretleft" size={24} color="white" />
