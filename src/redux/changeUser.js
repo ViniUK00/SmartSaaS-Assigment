@@ -15,7 +15,7 @@ export const changeUserSlice = createSlice({
         case 'next':
           state.currentUserIndex++;
           state.showResetComponent = false; // Update this line
-          if (state.currentUserIndex === 10) {
+          if (state.currentUserIndex === 30) {
             state.showResetComponent = false; // Update this line
             state.currentUserIndex = 0;
           }

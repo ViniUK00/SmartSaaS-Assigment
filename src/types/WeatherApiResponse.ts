@@ -1,4 +1,5 @@
 export interface Weather {
+    id: any,
     lat : number,
     lon: number,
     timezone: string,

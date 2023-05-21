@@ -20,7 +20,7 @@ export type Data = {
   };
 
 
-export const url = 'https://random-data-api.com/api/v2/users?size=10'
+export const url = 'https://random-data-api.com/api/v2/users?size=30'
 
 const fetchUserData = async (url: string) => {
     const res = await axios.get(url);

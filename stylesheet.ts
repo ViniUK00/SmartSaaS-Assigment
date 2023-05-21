@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignContent:'center',
     alignSelf:'center',
-    borderRadius: 80,
+    borderRadius: 30,
     color: '#FFFFFF',
     paddingBottom:10
   },
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     marginHorizontal:60,
+    shadowOpacity:0.5,
   },
   button__text: {
     fontSize:16,
@@ -51,16 +52,17 @@ const styles = StyleSheet.create({
   data__Container:{
     width:200,
     paddingTop:8,
-    borderRadius:20,
+    borderRadius:10,
     marginBottom:10,
     backgroundColor: 'white',
     shadowOpacity:0.2,
     marginLeft:50
   },
   data__Text: {
-    fontSize:20,
+    fontSize:16,
     color: '#333333',
-    paddingLeft:10
+    paddingLeft:10,
+    padding:5,
   }
   ,
   label__Container:{
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     marginLeft:40,
   },
   label__Text:{
-    fontSize:18,
+    fontSize:15,
     color: 'white',
   },
   loading__container: {
@@ -89,10 +91,14 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap:5,
   },
   container__Buttons:{
     flexDirection:'row',
     paddingHorizontal:10,
+    backgroundColor:"#ECECEC",
+    borderRadius:10,
+
   },
   screen:{
   },
@@ -166,10 +172,59 @@ const styles = StyleSheet.create({
     marginRight:180,
     backgroundColor: 'rgba(157,38,113,0.7)',
     shadowOpacity:0.4,
-    margin:14
+    margin:14,
   },
   tempText:{
     color:'white',
+    fontWeight:'bold'
+  },
+  dropdown_reports:{
+    borderRadius:20,
+    flex:1,
+    zIndex:2
+  },
+  dropdown_label_reports:{
+    position:'absolute',
+    bottom:25,
+    left:100,
+    fontWeight:'bold',
+    fontSize:15,
+    flex:1,
+
+  },
+  dropdown_container_reports:{
+    alignItems:'flex-end',
+    marginRight:40,
+    flex:1,
+    zIndex:1
+  },
+
+  label_reports: {
+    position:'absolute',
+    bottom:15,
+    left:190,
+    fontWeight:'bold'
+  },
+  weathertypes_container: {
+    borderRadius:5,
+    padding:10,
+    position:'absolute',
+    top:50,
+    right:40,
+    flexDirection:'column',
+    marginRight:10,
+    gap:5,
+    zIndex:1,
+  },
+  weatherTypeText:{
+    color:'black',
+    shadowOpacity:0.1
+  },
+  label_y_axis_reports:{
+    position:'absolute',
+    bottom:110,
+    left:25,
+    transform: [{ rotate: '270deg'}],
     fontWeight:'bold'
   }
 })

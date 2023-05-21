@@ -2,7 +2,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import changeUserReduc from './changeUser'
 import { userId } from './changeUser';
 import userReducer from '../redux/userSlice';
-import locationReducer from './locationSlice'
+import locationReducer from './locationSlice';
+import userApiReducer from './userApiSlice';
 
 const logUserId = (store) => (next) => (action) => {
   if (action.type === 'changeUser/changeUserReduc') {
@@ -24,6 +25,7 @@ export default configureStore({
     changeUser: changeUserReduc,
     user: userReducer,
     location: locationReducer,
+    userAPI: userApiReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat(logUserId),

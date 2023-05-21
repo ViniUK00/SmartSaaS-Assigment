@@ -33,7 +33,6 @@ type RootStackParamList = {
 };
 
 
-
 const WeatherCard: React.FC<WeatherCardProps> = ({ icon, temp, feels_like, main }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'HomeScreen'>>();
   
