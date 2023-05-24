@@ -1,4 +1,4 @@
-import { View,Text,Image,SafeAreaView } from 'react-native'
+import { View,Text,Image,SafeAreaView, ImageBackground } from 'react-native'
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import LottieView from 'lottie-react-native';
 import { useSelector } from 'react-redux';
@@ -7,12 +7,17 @@ import { UsersContext } from '../contexts/UsersContext';
 import { StyleSheet } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const About = () => {
   const [loading,setLoading] = useState(true);
   const user = useSelector(selectUser);
   const [lat, setLat] = useState();
   const [ lon, setLon] = useState();
+  console.log(user);
+  
   const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
       navigation.setOptions({
@@ -22,7 +27,6 @@ const About = () => {
 
     console.log(user?.address.coordinates)
     
-
     useEffect(()=>{
       {
         if(user){
@@ -60,32 +64,57 @@ if (region) {
         loop
       />
       </SafeAreaView> :
-     <SafeAreaView style={{flex:1, alignContent:'center', alignItems:'center'}}>
-      {/* <LottieView
-        source={require('../../assets/coming-soon.json')}
-        autoPlay
-        loop
-      /> */}
+      <ImageBackground
+      source={require('../../assets/about-background.webp')}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.detailContainer}>
+        <View style={styles.avatarContainer}>
           <Image
-            source={{uri: user.avatar }}
+            source={{uri: user.avatar}}
             style={styles.avatar}
           />
-          <View style={styles.nameContainer}>
-            <Text style={styles.fName}>{user.first_name}</Text>
-            <Text style={styles.lName}>{user.last_name}</Text>
-          </View>
-         <MapView
+        </View>
+        <View style={styles.nameContainer}>
+          <Text style={styles.fName}>{user.first_name} {user.last_name}</Text>
+        </View>
+        <View style={styles.locationContainer}>
+          <Text style={styles.locationText}>{user.address.city}, {user.address.country}</Text>
+        </View>
+      </View>
+      <View style={styles.extraInfoContainer}>
+        <View style={styles.extraInfoContainerHeader}>
+        <Text style={styles.headerText}>Contact Details</Text>
+        </View>
+        <View style={styles.line} />
+      <View style={styles.emailContainer}>
+        <FontAwesome name="envelope" size={20} color="#3A3B3C" />
+          <Text style={styles.emailText}>{user.email}</Text>
+        </View>
+        <View style={styles.emailContainer}>
+        <FontAwesome5 name="phone-alt" size={20} color="#3A3B3C" />
+          <Text style={styles.emailText}>{user.phone_number}</Text>
+        </View>
+      </View>
+      <View style={styles.mapContainer}>
+      <MapView
           region={region}
-          style={styles.map}
+          style={[styles.map]}
           mapType='mutedStandard'>
           <Marker
            coordinate={{
-            latitude:user.address.coordinates.lat,
-            longitude:user.address.coordinates.lon
+            latitude: region.latitude,
+            longitude: region.longitude,
           }}
-          />
+          >
+            <View>
+              <FontAwesome5 name="map-marker-alt" size={24} color="red" /></View>
+          </Marker>
+          
           </MapView>
-    </SafeAreaView>
+      </View>
+      
+    </ImageBackground>
 
   )
 }
@@ -95,9 +124,10 @@ export default About
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: '#F5F5F5',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
   },
   loadingContainer: {
     flex: 1,
@@ -106,30 +136,81 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 50,
     borderRadius: 50,
-    marginTop: 40,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  detailContainer:{
+    backgroundColor:'white',
+    padding:30,
+    margin:10,
+    marginTop:130,
+    borderRadius:15,
+    shadowOpacity:0.1
   },
   nameContainer: {
-    marginTop: 20,
+    marginTop: 10,
     alignItems: 'center',
   },
+  avatarContainer:{
+    justifyContent:'flex-start',
+    alignItems:'center'
+  },
   fName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 20,
+    fontWeight: '700',
     textAlign: 'center',
   },
-  lName: {
-    fontSize: 20,
-    color: '#555',
-    textAlign: 'center',
+  extraInfoContainer:{
+    backgroundColor:'white',
+    padding:25,
+    margin:10,
+    borderRadius:15,
+    shadowOpacity:0.2,
+    gap:20
+  },
+  emailContainer:{
+    flexDirection:'row',
+    gap:15
+  },
+  extraInfoContainerHeader:{
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  locationContainer:{
+    justifyContent:'flex-start',
+    alignItems:'center',
+  },
+  locationText:{
+    fontSize:12,
+  },
+  emailText:{
+    fontSize:15,
+    fontWeight:'600'
+  },
+  mapContainer:{
+    flex:1,
+    marginHorizontal:15,
+    borderRadius:10,
+    marginVertical:10,
+    shadowOpacity:0.2,
+    
+  },
+  line: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  headerText:{
+    fontSize:18,
+    fontWeight:'bold'
   },
   map: {
     width: '100%',
-    height: '50%',
-    marginTop: 20,
+    height: '100%',
+    borderRadius:10,
   },
   text: {
     fontSize: 18,

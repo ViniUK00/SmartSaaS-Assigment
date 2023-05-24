@@ -181,13 +181,16 @@ const styles = StyleSheet.create({
   dropdown_reports:{
     borderRadius:20,
     flex:1,
-    zIndex:2
+    zIndex:2,
+    borderWidth:0
   },
   dropdown_label_reports:{
     position:'absolute',
     bottom:25,
     left:100,
     fontWeight:'bold',
+    color:'white',
+    shadowOpacity:0.2,
     fontSize:15,
     flex:1,
 
@@ -200,10 +203,15 @@ const styles = StyleSheet.create({
   },
 
   label_reports: {
+    fontWeight:'bold',
+  },
+  label_reportsContainer:{
     position:'absolute',
-    bottom:15,
-    left:190,
-    fontWeight:'bold'
+    bottom:5,
+    right:"50%",
+    zIndex:2,
+    justifyContent:'center',
+    alignItems:'center',
   },
   weathertypes_container: {
     borderRadius:5,
@@ -220,13 +228,43 @@ const styles = StyleSheet.create({
     color:'black',
     shadowOpacity:0.1
   },
-  label_y_axis_reports:{
-    position:'absolute',
-    bottom:110,
-    left:25,
-    transform: [{ rotate: '270deg'}],
-    fontWeight:'bold'
-  }
+  tableContainer: {
+    flex: 1,
+    margin: 8,
+    backgroundColor: 'white',
+    borderRadius: 8,
+  },
+  tableBorder: {
+    borderWidth: 1,
+    borderColor: 'gray',
+  },
+  tableText: {
+    fontSize: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    color: 'black',
+  },
+  tableHeaderText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    color: 'black',
+    backgroundColor: 'purple',
+  },
+  AvatarPopUpContainer:{
+    backgroundColor:'white',
+    borderTopLeftRadius:5,
+    borderBottomLeftRadius:5,
+  },
+  AvatarPopUpNameContainer:{
+    backgroundColor:"#D3D3D3",
+    padding:2,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
 })
 
 export default styles;

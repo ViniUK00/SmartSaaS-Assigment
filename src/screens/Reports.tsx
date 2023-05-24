@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, ImageBackground} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,6 +7,8 @@ import styles from '../../stylesheet';
 import { LineChart } from 'react-native-chart-kit';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import AvatarPopUp from '../components/AvatarPopUp';
 
 type WeatherData = {
   _id: string;
@@ -29,6 +31,11 @@ type User = {
 const Reports = () => {
     const [usersData, setUsersData] = useState<User[]>([]);
     const [userWeatherData, setUserWeatherData] = useState<any>();
+
+    // Reload Picker
+    const [reload, setReload] = useState<any>(false);
+
+    // For the chart with the frequency filter
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("daily");
     const [items, setItems] = useState([
@@ -37,96 +44,164 @@ const Reports = () => {
         {label: 'Daily', value: 'daily'}
         ]);
 
-        const [openChart2, setOpenChart2] = useState(false);
-        const [valueChart2, setValueChart2] = useState(null);
-        const [itemsChart2, setItemsChart2] = useState([]);
+    // For the chart with the user filter
+    const [openChart2, setOpenChart2] = useState(false);
+    const [valueChart2, setValueChart2] = useState(null);
+    const [itemsChart2, setItemsChart2] = useState([]);
     const [weatherPosts, setWeatherPosts] = useState<any>({});
     
     const weatherTypes = ["Clear", "Clouds", "Rain"];
 
-    const [showUser, setShowUser] = useState(false);
+    // Show avatar logic
     const [clicked,setClicked] = useState(false); 
+    const [showAvatar, setShowAvatar] = useState(false);
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+    const [dataPointUserId, setDataPointUserId] = useState<string>("");
+    const [dataPointClickData, setDataPointClickData] = useState<any>();
 
+    // initializing the weather count for each user
+    const [weatherCountAll,setWeatherCountAll] = useState([]);
+
+    // headers for the table
+    const header = ["",'Clear', 'Clouds', 'Rain'];
+  
+    // fetching most weather posts filtered by weather type and period
     const fetchWeatherPosts = async (type:string, period:string) => {
         const response = await axios.get(`http://localhost:3000/weather/most-posts?type=${type}&period=${period}`);
         return response.data;
       };
 
+    // calling the fetchWeatherPosts every time the value changes
+    // value could be (minutely, hourly, etc..)
     useEffect(() => {
     const fetchAllWeatherPosts = async () => {
       const newWeatherPosts:any = {};
-
       for (const type of weatherTypes) {
         const data = await fetchWeatherPosts(type, value);
         newWeatherPosts[type] = data;
       }
-
       setWeatherPosts(newWeatherPosts);
     };
-
     fetchAllWeatherPosts();
   }, [value]);
 
-  const showPeakUser = (e:any) =>{
-    console.log(e);
-    if (e) {
-      setClicked(true)
+  // function to show the user avatar who has posted more 
+  // weather depending on the weather type setting up the id of the
+  // user in the key prop of the corresponding chart.
+  const showPeakUser = async (e: any) => {
+    setClicked(!clicked);
+    setX(e.x);
+    setY(e.y);
+    if (!clicked) {
+      setShowAvatar(!showAvatar);
     }
+    setDataPointUserId(e.dataset.key);
+    console.log(e);
+    console.log(showAvatar, "show avatar");
+    console.log(clicked, "clicked");
   }
-    console.log(clicked);
-    
 
-    const navigation = useNavigation<any>();
+  // clears the tab header
+const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
       navigation.setOptions({
         headerShown: false,
       })
     },[])
+
+    // fetch all current user name for the dropdown menu (for the second chart)
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3000/get-user-atomic');
-        console.log(response.data.data[0]._id);
         setUsersData(response.data.data);
         const items = response.data.data.map((user: { first_name: string; last_name: string; id:any; }) => ({
           label: `${user.first_name} ${user.last_name}`,
           value: `${user.id}`,
       }));
       setItemsChart2(items);
-      
+      setReload(false)
       } catch (error) {
         console.error('Error fetching users', error);
       }
     };
 
+    // calling once
+    //TODO onPickerOpen reload the dropdown
+    //TODO search through the list
     useEffect(() => {
       fetchUsers();
-  }, []);
+  }, [reload]);
 
-
-    console.log(weatherPosts);
     
+    // function to fetch the weather count for each weather type filtered by id
+    // depending on the value of the corresponding dropdown
     const fetchUserWeatherDataChart2 = async (id:string) => {
       try {
         const response = await axios.get(`http://localhost:3000/users/${id}`);
-        console.log(response.data.data.weatherCount);
         setUserWeatherData(response.data.data.weatherCount);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-    
+
+    // calling it whenever the dropdown value changes 
     useEffect(() => {
-      fetchUserWeatherDataChart2(valueChart2?valueChart2:"0");
+      if(valueChart2) {
+        fetchUserWeatherDataChart2(valueChart2);
+      }
     }, [valueChart2]);
+
+
+    // function to fetchAllWeatherTypePosts count for the table
+    const fetchAllWeatherTypePosts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/weather/getAllWeatherTypePostCount`);
+        const mappedData = response.data.map((
+          item: { first_name: string; weatherCounts: { Clear: string; Clouds: string; Rain: string; }; }) => [
+          item.first_name,
+          item.weatherCounts.Clear || '0',
+          item.weatherCounts.Clouds || '0',
+          item.weatherCounts.Rain || '0',
+        ]);
+        setWeatherCountAll(mappedData);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    // calling fetchAllWeatherTypePosts once the tab opens
+    useEffect(() => {
+      fetchAllWeatherTypePosts();
+    }, []);
+
+    // fetch data by the id
+    const fetchUserDataById = async (id:string) => {
+      try {
+        const response = await axios.get(`http://localhost:3000/users/${id}`);
+        setDataPointClickData(response.data.data.weatherSet)
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
     
-    
+    // calling the fetchUserDataById everytime we click diffent pointer on the chart
+    useEffect(() => {
+      if (dataPointUserId) {
+        fetchUserDataById(dataPointUserId)
+      }
+    }, [dataPointUserId]);
+
     
   return (
+    <ImageBackground
+      source={require('../../assets/reports-background.png')}
+      style={styles.backgroundImage}
+    >
     <SafeAreaView style={{flex:1}} >
         <ScrollView
         nestedScrollEnabled={true}>
           <View>
-            
           <View style={{flexGrow:1}}>
           <View style={styles.weathertypes_container}>
           <Text style={styles.weatherTypeText}>
@@ -139,21 +214,29 @@ const Reports = () => {
           <FontAwesome name="square" size={15} color="#8b0000" /> Rain
           </Text>
           </View>
-        {weatherPosts ? <LineChart
+          <View>
+            <View style={styles.label_reportsContainer}>
+            <Text style={styles.label_reports}>Time</Text>
+            </View>
+          
+          {weatherPosts ? <LineChart
     data={{
         labels:[],
         datasets: [
             {
                 data: [1,weatherPosts.Clear ? weatherPosts.Clear[0].count: 0,0],
                 color: () => `rgba(0, 0, 139, 1)`,
+                key:weatherPosts.Clear ? weatherPosts.Clear[0]._id: 0,
             },
             {
                 data: [1,weatherPosts.Clouds ? weatherPosts.Clouds[0].count : 0,0],
-                color: () => `rgba(156, 114, 72,1)`
+                color: () => `rgba(156, 114, 72,1)`,
+                key:weatherPosts.Clouds ? weatherPosts.Clouds[0]._id:0
             },
             {
                 data: [1,weatherPosts.Rain ? weatherPosts.Rain[0].count:0,0],
-                color: () => `rgba(139, 0, 0, 1)`
+                color: () => `rgba(139, 0, 0, 1)`,
+                key:weatherPosts.Rain ? weatherPosts.Rain[0]._id : 0
             }
         ],
     }}
@@ -163,29 +246,25 @@ const Reports = () => {
     withHorizontalLabels={false}
     withInnerLines={false}
     onDataPointClick={showPeakUser}
+    horizontalLabelRotation={180}
     chartConfig={{
         backgroundColor: '#1cc910',
         backgroundGradientFrom: '#eff3ff',
         backgroundGradientTo: '#efefef',
         strokeWidth:2,
         color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
-        style: {
-            borderRadius: 30,
-            flex:1
-        },
     }}
     bezier
     style={{
-        marginBottom:8,
-        borderRadius: 12,
-        borderWidth:1,
-        margin:45,
-        paddingRight:35,
-        paddingTop:20
+      borderRadius:15,
+      justifyContent:'center',
+      alignItems:'center',
+      paddingHorizontal:10,
     }}
-/>: <Text>Loading</Text>}
-        <Text style={styles.label_reports}>Time</Text>
-        <Text style={styles.label_y_axis_reports}>Frequency</Text>
+></LineChart> : <Text>Loading</Text>}
+{showAvatar && <AvatarPopUp x={x} y={y} avatar={dataPointClickData?.avatar} name={dataPointClickData?.first_name + " " + dataPointClickData?.last_name}/>}
+          </View>
+        
         </View>
         <View style={styles.dropdown_container_reports}>
             <Text style={styles.dropdown_label_reports}>Frequency</Text>
@@ -240,34 +319,41 @@ const Reports = () => {
     }}
     bezier
     style={{
-        marginBottom:8,
-        borderRadius: 16,
-        borderWidth:1,
-        margin:35,
-        paddingRight:35,
-        paddingTop:20
+      borderRadius:15,
+      justifyContent:'center',
+      alignItems:'center',
+      paddingHorizontal:10,
     }}
 />
+
         </View>
         <View style={styles.dropdown_container_reports}>
-            <Text style={styles.dropdown_label_reports}>Frequency</Text>
             <DropDownPicker
                 open={openChart2}
                 value={valueChart2}
                 items={itemsChart2}
                 setOpen={setOpenChart2}
                 setValue={setValueChart2}
+                onPress={()=>{setReload(true)}}
                 placeholder='User'
                 style={styles.dropdown_reports}
+                searchable={true}
                 containerStyle={{
                     width:150,
                     margin:10
                     }}
             />
         </View>
-          </View>
+        <View style={styles.tableContainer}>
+            <Table borderStyle={styles.tableBorder}>
+                <Row data={header} textStyle={styles.tableHeaderText} />
+                <Rows data={weatherCountAll} textStyle={styles.tableText} />
+            </Table>
+        </View>
+        </View>
         </ScrollView>
     </SafeAreaView>
+    </ImageBackground>
   )
 }
 

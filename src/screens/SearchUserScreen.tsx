@@ -54,7 +54,6 @@ type User = {
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:3000/get-user-atomic');
-        console.log(response.data.data[0]._id);
         setUsersData(response.data.data);
       } catch (error) {
         console.error('Error fetching users', error);
