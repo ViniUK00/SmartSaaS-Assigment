@@ -42,9 +42,9 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ icon, temp, feels_like, main 
       style={styles.container}>
       <LinearGradient
         colors={[
-          'rgba(45, 170, 255, 0.7)',
-          'rgba(57, 141, 203, 0.9)',
-          'rgba(45, 170, 255, 0.7)',
+          'rgba(45, 170, 255, 0.3)',
+          'rgba(57, 141, 203, 0.5)',
+          'rgba(45, 255, 255, 0.3)',
             ]} style={styles.backround}>
         <View>
           

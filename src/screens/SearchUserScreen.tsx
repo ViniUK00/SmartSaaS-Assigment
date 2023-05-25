@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Button, ScrollView, TextInput,StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, Button, ScrollView, TextInput,StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import UserItem from '../components/renderUserItem';
@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { selectSelectedUserApi, setselectedUserApi } from '../redux/userApiSlice';
 import { useDispatch } from 'react-redux';
+import styles from '../../stylesheet';
 
 // const dispatch = useDispatch();
 
@@ -93,21 +94,25 @@ type User = {
       
       
     return (
-        <SafeAreaView>
+      <ImageBackground
+      source={require('../../assets/reports-background.png')}
+      style={styles.backgroundImage}
+    > 
+    <SafeAreaView>
             <ScrollView> 
             <View style={stylesSearchBar.container}>
         <TextInput
           style={stylesSearchBar.input}
           onChangeText={handleSearch}
           value={search}
+          placeholderTextColor={'white'}
           placeholder="Search for a user..."
           onChange={performSearch}
         />
       </View>
-        <Button
-            onPress={reloadUsers}
-            title="Reload Database"
-            />
+      <TouchableOpacity style={stylesSearchBar.button} onPress={reloadUsers}>
+      <Text style={stylesSearchBar.buttonText}>Reload Database</Text>
+    </TouchableOpacity>
             <FlatList
           data={usersData.flatMap(user => user.weatherSet)} 
           renderItem={({ item, index }) => <UserItem item={item} index={index} />}
@@ -116,6 +121,7 @@ type User = {
         
         </ScrollView>
         </SafeAreaView>
+        </ImageBackground>
     )
   }
   
@@ -128,9 +134,23 @@ type User = {
     },
     input: {
       height: 40,
-      borderColor: 'gray',
+      borderColor: 'white',
+      color:'white',
       borderWidth: 1,
       borderRadius: 5,
       paddingLeft: 10,
+    },
+    button: {
+      backgroundColor: 'rgba(128, 0, 128, 0.5)',
+      paddingVertical: 10,
+      borderRadius: 15,
+      marginHorizontal:80,
+      margin:10,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
     },
   });

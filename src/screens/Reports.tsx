@@ -44,6 +44,7 @@ const Reports = () => {
         {label: 'Daily', value: 'daily'}
         ]);
 
+        
     // For the chart with the user filter
     const [openChart2, setOpenChart2] = useState(false);
     const [valueChart2, setValueChart2] = useState(null);
@@ -224,17 +225,17 @@ const navigation = useNavigation<any>();
         labels:[],
         datasets: [
             {
-                data: [1,weatherPosts.Clear ? weatherPosts.Clear[0].count: 0,0],
+                data: [0,0,0,weatherPosts.Clear ? weatherPosts.Clear[0].count: 0,0],
                 color: () => `rgba(0, 0, 139, 1)`,
                 key:weatherPosts.Clear ? weatherPosts.Clear[0]._id: 0,
             },
             {
-                data: [1,weatherPosts.Clouds ? weatherPosts.Clouds[0].count : 0,0],
+                data: [0,0,weatherPosts.Clouds ? weatherPosts.Clouds[0].count : 0,1,0],
                 color: () => `rgba(156, 114, 72,1)`,
                 key:weatherPosts.Clouds ? weatherPosts.Clouds[0]._id:0
             },
             {
-                data: [1,weatherPosts.Rain ? weatherPosts.Rain[0].count:0,0],
+                data: [0,weatherPosts.Rain ? weatherPosts.Rain[0].count:0,1,0],
                 color: () => `rgba(139, 0, 0, 1)`,
                 key:weatherPosts.Rain ? weatherPosts.Rain[0]._id : 0
             }
@@ -248,9 +249,10 @@ const navigation = useNavigation<any>();
     onDataPointClick={showPeakUser}
     horizontalLabelRotation={180}
     chartConfig={{
-        backgroundColor: '#1cc910',
-        backgroundGradientFrom: '#eff3ff',
-        backgroundGradientTo: '#efefef',
+      backgroundGradientFrom: "#1E2923",
+      backgroundGradientFromOpacity: 0.1,
+      backgroundGradientTo: "#08130D",
+      backgroundGradientToOpacity: 0.3,
         strokeWidth:2,
         color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
     }}
@@ -294,7 +296,7 @@ const navigation = useNavigation<any>();
                   Number((userWeatherData?.Clear || 0)),
                   Number((userWeatherData?.Rain || 0)),
                   Number((userWeatherData?.Snow || 0))],
-                color: () => `rgba(0, 0, 139, 1)`,
+                color: () => `rgba(255, 255, 255, 1)`,
             },
         ],
     }}
@@ -308,9 +310,10 @@ const navigation = useNavigation<any>();
     onDataPointClick={showPeakUser}
     segments={4}
     chartConfig={{
-        backgroundColor: '#111111',
-        backgroundGradientFrom: '#eff3ff',
-        backgroundGradientTo: '#efefef',
+      backgroundGradientFrom: "#1E2923",
+      backgroundGradientFromOpacity: 0.1,
+      backgroundGradientTo: "#08130D",
+      backgroundGradientToOpacity: 0.3,
         decimalPlaces:1,
         strokeWidth:2,
         color: () => `rgba(0, 0, 0, 1)`,
@@ -344,8 +347,8 @@ const navigation = useNavigation<any>();
                     }}
             />
         </View>
-        <View style={styles.tableContainer}>
-            <Table borderStyle={styles.tableBorder}>
+        <View>
+            <Table borderStyle={styles.tableBorder} style={styles.tableContainer}>
                 <Row data={header} textStyle={styles.tableHeaderText} />
                 <Rows data={weatherCountAll} textStyle={styles.tableText} />
             </Table>

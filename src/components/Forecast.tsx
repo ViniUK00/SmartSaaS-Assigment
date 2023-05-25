@@ -57,9 +57,9 @@ const Forecast = () => {
 
   return (
     <LinearGradient colors={[
-      'rgba(45, 170, 255, 0.7)',
-      'rgba(57, 141, 203, 0.9)',
-      'rgba(45, 170, 255, 0.7)',
+      'rgba(45, 170, 255, 0.6)',
+          'rgba(57, 141, 203, 0.6)',
+          'rgba(45, 200, 255, 0.6)',
         ]} style={styles.container}>
       <FlatList
         data={forecastItems}
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '40%',
+    height: '37%',
     display: 'flex',
     flexDirection: 'row',
     borderRadius: 30,

@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import { postUID } from '../../api/postUserData';
 import { selectUser } from '../redux/userSlice';
 import { usePostUserInfo } from '../hooks/usePostUserInfo';
+import WelcomeModal from '../components/WelcomeModal';
 
 const HomeScreen = () => {
   const user = useSelector(selectUser);
@@ -28,8 +29,8 @@ const HomeScreen = () => {
   const isDay = hours >= 6 && hours < 18;
 
   const backgroundImage = isDay
-    ? require('../../assets/day.webp')
-    : require('../../assets/night.png')
+    ? require('../../assets/055eac25cb71d620c44f903055f372e9.gif')
+    : require('../../assets/96dfd411ab0e68f8bc1eb47e4eee8771.gif')
 
   const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
@@ -74,7 +75,6 @@ const HomeScreen = () => {
       setLocation(location);
     })();
   }, []);
-  //console.log(location?.coords.longitude);
   
 
   const useCurrentLocationHandler = async () => {
@@ -107,10 +107,8 @@ const HomeScreen = () => {
     }
   };
 
-  console.log(weatherData?.lat);
 
   const mainWeather = weatherData?.current.weather[0].main;
-  console.log(mainWeather);
 
   const changeUserState = useSelector((state:any)=>state.changeUser);
   
@@ -146,7 +144,7 @@ const HomeScreen = () => {
       style={{ flex: 1 }}
       resizeMode="cover">
     <SafeAreaView style={styles.screen}>
-
+      <WelcomeModal />
       <View style={styles.searchAndIconContainer}>
       <GooglePlacesAutocomplete
         placeholder={'Search for a city'}

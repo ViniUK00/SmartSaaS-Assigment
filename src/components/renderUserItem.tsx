@@ -48,7 +48,6 @@ const UserItem: React.FC<UserItemProps> = ({ item, index }) => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get('http://localhost:3000/get-user-atomic');
-      console.log(response.data.data[0]._id);
       setUsersData(response.data.data);
     } catch (error) {
       console.error('Error fetching users', error);
@@ -73,8 +72,6 @@ const UserItem: React.FC<UserItemProps> = ({ item, index }) => {
       })
       );
   }
-
-  console.log(user);
   
   
   
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     margin: 10,
     marginHorizontal: 20,
-    backgroundColor: '#D3D3D3',
+    backgroundColor: 'rgba(255,255,255, 0.3)',
     borderRadius: 15,
   },
   avatar: {
@@ -135,8 +132,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
+    color:'white'
   },
-  nameLabel: {},
+  nameLabel: {
+    color:'white'
+  },
   weatherIcon: {
     width: 80,
     height: 80,

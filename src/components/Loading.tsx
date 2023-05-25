@@ -9,10 +9,9 @@ const Loading = () => {
       <LottieView
         autoPlay
         style={{
-          width: 300,
-          height: 300,
+          height: 450,
         }}
-        source={require('../../assets/map-marker-spins.json')}
+        source={require('../../assets/142181-city.json')}
       />
     </View>
   )
@@ -25,7 +24,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       flex: 1,
-      marginTop:400,
+      marginTop:300,
+      marginRight:30
     },
    
   });

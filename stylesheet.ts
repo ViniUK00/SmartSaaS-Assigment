@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
     borderRadius:5,
     padding:10,
     position:'absolute',
-    top:50,
-    right:40,
+    top:0,
+    right:0,
     flexDirection:'column',
     marginRight:10,
     gap:5,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flex: 1,
     margin: 8,
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(0,0,0,0.3)',
     borderRadius: 8,
   },
   tableBorder: {
@@ -242,15 +242,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    color: 'black',
+    color: 'white',
+    fontWeight:"600"
   },
   tableHeaderText: {
     fontSize: 16,
-    fontWeight: 'bold',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    color: 'black',
-    backgroundColor: 'purple',
+    color: 'white',
+    fontWeight:"600"
   },
   AvatarPopUpContainer:{
     backgroundColor:'white',
@@ -264,6 +264,15 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
+  },
+  lottieContainer:{
+    margin:50
+  },
+  lottieChart: {
+    height:'60%',
+    justifyContent:'flex-start',
+    alignItems:'center',
+    marginRight:90
   },
 })
 

@@ -54,7 +54,12 @@ if (region) {
   
 
   return (
-    loading?<SafeAreaView style={styles.loadingContainer}>
+    loading?
+    <ImageBackground
+      source={require('../../assets/about-background.webp')}
+      style={styles.backgroundImage}
+    >
+    <SafeAreaView style={styles.loadingContainer}>
       <Text style={styles.text}>Select a user from the users tab
        to show more details about the user</Text>
        <LottieView
@@ -63,7 +68,7 @@ if (region) {
         autoPlay
         loop
       />
-      </SafeAreaView> :
+      </SafeAreaView></ImageBackground> :
       <ImageBackground
       source={require('../../assets/about-background.webp')}
       style={styles.backgroundImage}
@@ -133,7 +138,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
   },
   avatar: {
     width: 70,

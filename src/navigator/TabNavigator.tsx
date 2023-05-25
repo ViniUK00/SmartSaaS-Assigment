@@ -34,7 +34,7 @@ const TabNavigator = () => {
         tabBarInactiveTintBackgroundColor:'gray',
         tabBarIcon: ({focused,color,size}) => {
           if (route.name === 'Users') {
-            return  (<FontAwesome name="user" size={24} color={focused ? '#1D2671' : 'gray'} />)
+            return  (<FontAwesome name="users" size={24} color={focused ? '#1D2671' : 'gray'} />)
           } else if (route.name === 'About') {
             return (<FontAwesome name="info-circle" size={24} color={focused ? '#1D2671' : 'gray'} />) 
           } else if (route.name ==='Home') {
