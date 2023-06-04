@@ -46,7 +46,10 @@ const WelcomeModal = () => {
 
 const styles = StyleSheet.create({
     centeredView: {
-      flex: 1,
+      flex:1,
+      position:'absolute',
+      top:-30,
+      bottom:0,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 22,

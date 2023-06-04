@@ -274,6 +274,29 @@ const styles = StyleSheet.create({
     alignItems:'center',
     marginRight:90
   },
+  tabBar:{
+    position:'absolute',
+    margin:25,
+    paddingBottom:10,
+    backgroundColor:'#ffffff',
+    borderRadius:15,
+    padding:20,
+    shadowColor:'#7F5DF0',
+    shadowOffset:{
+      width:0,
+      height:10,
+    },
+    shadowOpacity:0.25,
+    shadowRadius:3.5,
+  },
+  buttonPrevContainer:{
+    position:'absolute',
+    left:-55
+  },
+  buttonNextContainer:{
+    position:'absolute',
+    right:-55
+  }
 })
 
 export default styles;

@@ -224,6 +224,17 @@ const ShowUsers: React.FC = () =>{
       <ScrollView showsVerticalScrollIndicator={false}>
         {usersData && <User item={usersData[currentUserIndex]}/>}
       </ScrollView>
+      <View style={styles.buttonPrevContainer}>
+        <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
+      <AntDesign name="caretleft" size={24} color="white" />
+    </Pressable>
+    </View>
+    <View style={styles.buttonNextContainer}>
+    <Pressable style={styles.button} onPress={()=>handleUserChange('next')}>
+    <AntDesign name="caretright" size={24} color="white" />
+    </Pressable>
+    </View>
+    
     </LinearGradient>
     {showResetComponent && <ResetComponent />}
       </View>
