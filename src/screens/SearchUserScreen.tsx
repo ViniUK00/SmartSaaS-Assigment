@@ -9,6 +9,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { selectSelectedUserApi, setselectedUserApi } from '../redux/userApiSlice';
 import { useDispatch } from 'react-redux';
 import styles from '../../stylesheet';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 // const dispatch = useDispatch();
 
@@ -94,10 +96,7 @@ type User = {
       
       
     return (
-      <ImageBackground
-      source={require('../../assets/reports-background.png')}
-      style={styles.backgroundImage}
-    > 
+      <LinearGradient colors={['#C33764','#1D2671']}>
     <SafeAreaView>
             <ScrollView> 
             <View style={stylesSearchBar.container}>
@@ -121,7 +120,7 @@ type User = {
         
         </ScrollView>
         </SafeAreaView>
-        </ImageBackground>
+        </LinearGradient>
     )
   }
   

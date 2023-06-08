@@ -5,6 +5,7 @@ import SplashScreen from '../screens/SplashScreen';
 import { Platform } from 'react-native';
 import ChartScreen from '../screens/ChartScreen';
 import ChartUserScreen from '../screens/ChartUserScreen';
+import UserProfile from '../screens/UserProfile';
 
 
 export type RootStackParamList = {
@@ -13,6 +14,7 @@ export type RootStackParamList = {
     ChartScreen:undefined;
     ChartUserScreen:undefined;
     Search:undefined;
+    UserProfile:undefined;
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -46,6 +48,14 @@ const RootNavigator = () => {
             headerShown: true,
           }}
         />
+        <RootStack.Screen
+        name='UserProfile'
+        component={UserProfile}
+        options={{
+          headerShown: true,
+        }}
+      />
+
       </RootStack.Group>
     </RootStack.Navigator>
   );

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { changeUser, userId } from "../redux/changeUser";
 import { selectUser, setUserObject } from "../redux/userSlice";
+import { setSelectedCurrentUser, selectSelectedCurrentUser} from "../redux/currentUserSlice";
 import MapView, { Marker } from "react-native-maps";
 import { AntDesign } from '@expo/vector-icons';
 import { Weather } from "../types/WeatherApiResponse";
@@ -17,6 +18,7 @@ import { usePostUserAtom } from "../hooks/usePostUserAtom";
 import { FontAwesome5 } from '@expo/vector-icons';
 import axios from "axios";
 import { usePostWeather } from "../hooks/usePostWeather";
+import ButtonGenerate from "../components/ButtonGenerate";
 
 type UserObjectData = {
   id: string
@@ -28,7 +30,9 @@ type UserObjectData = {
 };
 
 const ShowUsers: React.FC = () =>{
-  const user = useSelector(selectUser);  
+  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectSelectedCurrentUser);
+
 
   const [previousRegion,setPreviousRegion] = useState({
     latitude: 0,
@@ -56,10 +60,11 @@ const ShowUsers: React.FC = () =>{
       weatherIcon: `https://openweathermap.org/img/wn/${weatherData?.current.weather[0].icon}@2x.png`,
       temp: weatherData?.current.temp
       })
-  },[usersData?.[currentUserIndex]])
+      dispatch(setSelectedCurrentUser(usersData?.[currentUserIndex]))
+  }
+  ,[usersData?.[currentUserIndex]])
   
   const weatherType = weatherData?.current.weather[0].main
-
   
 
     const LoadingComponent = ()=> {
@@ -107,7 +112,8 @@ const ShowUsers: React.FC = () =>{
         fadeAnim.setValue(0);
       }
     }
-
+    
+    
     const [region, setRegion] = useState({
       latitude: 0,
       longitude: 0,
@@ -122,7 +128,6 @@ const ShowUsers: React.FC = () =>{
         longitudeDelta: 0.005,})
     },[usersData,currentUserIndex])
 
-    console.log(region, ";feh;kvbanjk");
     
 
     
@@ -177,12 +182,13 @@ const ShowUsers: React.FC = () =>{
     // TODO Change to callback method on handling user post
     // TODO object.entries READ
     // TODO Look up reduce
-    const handle = () => {
-      if(user) {
+
+
+    const handleGenerateClick = () => {
+      for (let i=0; i<10; i++) {
         
       }
     }
-    
     
     
 
@@ -238,6 +244,18 @@ const ShowUsers: React.FC = () =>{
     </LinearGradient>
     {showResetComponent && <ResetComponent />}
       </View>
+      <View 
+      style={{
+        shadowColor:'#7F5DF0',
+        shadowOffset:{
+          width:0,
+          height:10,
+          },
+          shadowOpacity:0.25,
+          shadowRadius:3.5,
+      }}>
+        <ButtonGenerate onPress={handleGenerateClick}/>
+      </View>
       <MapView
           region={region}
           style={[styles.map]}
@@ -269,14 +287,6 @@ const ShowUsers: React.FC = () =>{
       {weatherData && <Text style={styles.tempText}>{`${(weatherData?.current.temp - 273.15).toFixed(0)}°C`}</Text>}
           </View>
           </MapView>
-          <View style={styles.container__Buttons}>
-    <Pressable style={styles.button} onPress={()=>handleUserChange('prev')}>
-      <AntDesign name="caretleft" size={24} color="white" />
-    </Pressable>
-    <Pressable style={styles.button} onPress={()=>handleUserChange('next')}>
-    <AntDesign name="caretright" size={24} color="white" />
-    </Pressable>
-    </View>
     </SafeAreaView>
       
   );

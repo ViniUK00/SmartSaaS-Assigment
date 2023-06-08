@@ -7,6 +7,7 @@ import styles  from '../../stylesheet'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -31,11 +32,8 @@ const ChartUserScreen = () => {
   console.log(temperatures);
   
   return (
-
-<ImageBackground
-      source={require('../../assets/reports-background.png')}
-      style={styles.backgroundImage}
-    >
+    
+<LinearGradient colors={['#C33764','#1D2671']} style={{flex:1}}>
       <SafeAreaView>
 <LineChart
       data={{
@@ -111,7 +109,7 @@ const ChartUserScreen = () => {
       />
       </View>
     </SafeAreaView>
-    </ImageBackground>
+    </LinearGradient>
   )
 }
 

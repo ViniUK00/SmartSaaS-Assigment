@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import AvatarPopUp from '../components/AvatarPopUp';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type WeatherData = {
   _id: string;
@@ -195,10 +196,7 @@ const navigation = useNavigation<any>();
 
     
   return (
-    <ImageBackground
-      source={require('../../assets/reports-background.png')}
-      style={styles.backgroundImage}
-    >
+    <LinearGradient colors={['#C33764','#1D2671']} style={{flex:1}}>
     <SafeAreaView style={{flex:1}} >
         <ScrollView
         nestedScrollEnabled={true}>
@@ -356,7 +354,7 @@ const navigation = useNavigation<any>();
         </View>
         </ScrollView>
     </SafeAreaView>
-    </ImageBackground>
+    </LinearGradient>
   )
 }
 

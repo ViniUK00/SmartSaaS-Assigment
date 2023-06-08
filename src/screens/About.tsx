@@ -1,232 +1,78 @@
-import { View,Text,Image,SafeAreaView, ImageBackground } from 'react-native'
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import LottieView from 'lottie-react-native';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../redux/userSlice';
-import { UsersContext } from '../contexts/UsersContext';
-import { StyleSheet } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import React, { useLayoutEffect } from 'react';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+
+
+type RootStackParamList = {
+    About: undefined;
+    UserProfile: undefined;
+    Main:undefined;
+  };
 
 const About = () => {
-  const [loading,setLoading] = useState(true);
-  const user = useSelector(selectUser);
-  const [lat, setLat] = useState();
-  const [ lon, setLon] = useState();
-  console.log(user);
-  
-  const navigation = useNavigation<any>();
+    const navigation = useNavigation<any>();
     useLayoutEffect(()=>{
       navigation.setOptions({
         headerShown: false,
       })
     },[])
 
-    console.log(user?.address.coordinates)
-    
-    useEffect(()=>{
-      {
-        if(user){
-          setLoading(false)
-        }
-      }
-    },[user])
-  
-  let region: Region = {
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-  
-if (region) {
-  region = {
-    latitude: user?.address.coordinates.lat,
-    longitude: user?.address.coordinates.lon,
-    latitudeDelta: 0.005,
-    longitudeDelta: 0.005,
-}
-}
-    
-  
+    const navigationStack = useNavigation<NativeStackNavigationProp<RootStackParamList, 'About'>>();
 
+  const handleClickOnItem = () => {
+    navigationStack.navigate('UserProfile');
+    
+  }
+
+    
   return (
-    loading?
-    <ImageBackground
-      source={require('../../assets/about-background.webp')}
-      style={styles.backgroundImage}
-    >
-    <SafeAreaView style={styles.loadingContainer}>
-      <Text style={styles.text}>Select a user from the users tab
-       to show more details about the user</Text>
-       <LottieView
-        style={styles.lottieContainer}
-        source={require('../../assets/blue-bird-waiting.json')}
-        autoPlay
-        loop
-      />
-      </SafeAreaView></ImageBackground> :
-      <ImageBackground
-      source={require('../../assets/about-background.webp')}
-      style={styles.backgroundImage}
-    >
-      <View style={styles.detailContainer}>
-        <View style={styles.avatarContainer}>
-          <Image
-            source={{uri: user.avatar}}
-            style={styles.avatar}
-          />
-        </View>
-        <View style={styles.nameContainer}>
-          <Text style={styles.fName}>{user.first_name} {user.last_name}</Text>
-        </View>
-        <View style={styles.locationContainer}>
-          <Text style={styles.locationText}>{user.address.city}, {user.address.country}</Text>
-        </View>
-      </View>
-      <View style={styles.extraInfoContainer}>
-        <View style={styles.extraInfoContainerHeader}>
-        <Text style={styles.headerText}>Contact Details</Text>
-        </View>
-        <View style={styles.line} />
-      <View style={styles.emailContainer}>
-        <FontAwesome name="envelope" size={20} color="#3A3B3C" />
-          <Text style={styles.emailText}>{user.email}</Text>
-        </View>
-        <View style={styles.emailContainer}>
-        <FontAwesome5 name="phone-alt" size={20} color="#3A3B3C" />
-          <Text style={styles.emailText}>{user.phone_number}</Text>
-        </View>
-      </View>
-      <View style={styles.mapContainer}>
-      <MapView
-          region={region}
-          style={[styles.map]}
-          mapType='mutedStandard'>
-          <Marker
-           coordinate={{
-            latitude: region.latitude,
-            longitude: region.longitude,
-          }}
-          >
-            <View>
-              <FontAwesome5 name="map-marker-alt" size={24} color="red" /></View>
-          </Marker>
-          
-          </MapView>
-      </View>
-      
-    </ImageBackground>
-
-  )
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleClickOnItem}>
+        <LinearGradient
+          colors={['#C33764', '#1D2671']}
+          style={styles.gradient}
+        >
+          <Text style={styles.buttonText}>User Profile</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <LinearGradient
+          colors={['#C33764', '#1D2671']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.gradient}
+        >
+          <Text style={styles.buttonText}>Predictions</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
-export default About
+export default About;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatar: {
-    width: 70,
-    height: 50,
-    borderRadius: 50,
-    alignItems:'center',
-    justifyContent:'center'
-  },
-  detailContainer:{
-    backgroundColor:'white',
-    padding:30,
-    margin:10,
-    marginTop:130,
-    borderRadius:15,
-    shadowOpacity:0.1
-  },
-  nameContainer: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  avatarContainer:{
-    justifyContent:'flex-start',
-    alignItems:'center'
-  },
-  fName: {
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  extraInfoContainer:{
-    backgroundColor:'white',
-    padding:25,
-    margin:10,
-    borderRadius:15,
-    shadowOpacity:0.2,
-    gap:20
-  },
-  emailContainer:{
-    flexDirection:'row',
-    gap:15
-  },
-  extraInfoContainerHeader:{
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  locationContainer:{
-    justifyContent:'flex-start',
-    alignItems:'center',
-  },
-  locationText:{
-    fontSize:12,
-  },
-  emailText:{
-    fontSize:15,
-    fontWeight:'600'
-  },
-  mapContainer:{
-    flex:1,
-    marginHorizontal:15,
-    borderRadius:10,
-    marginVertical:10,
-    shadowOpacity:0.2,
-    
-  },
-  line: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    marginVertical: 10,
-  },
-  headerText:{
-    fontSize:18,
-    fontWeight:'bold'
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-    borderRadius:10,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-  },
-  lottieContainer: {
-    marginTop: 30,
-    width: '80%',
-    height: 200,
-  },
-});
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    button: {
+      width: 200,
+      height: 200,
+      marginBottom: 20,
+    },
+    gradient: {
+      flex: 1,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 24,
+    },
+  });
+  

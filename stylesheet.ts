@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
       width: '75%',
       height: '30%',
       marginHorizontal: 20,
-      borderRadius:30
+      borderRadius:30,
+      marginBottom:100
   },
   weatherIcon: {
     height: 50,
@@ -277,7 +278,9 @@ const styles = StyleSheet.create({
   tabBar:{
     position:'absolute',
     margin:25,
-    paddingBottom:10,
+    paddingBottom:0,
+    paddingTop:0,
+    borderTopLeftRadius:6,
     backgroundColor:'#ffffff',
     borderRadius:15,
     padding:20,
