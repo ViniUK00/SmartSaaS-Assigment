@@ -99,9 +99,6 @@ const Reports = () => {
       setShowAvatar(!showAvatar);
     }
     setDataPointUserId(e.dataset.key);
-    console.log(e);
-    console.log(showAvatar, "show avatar");
-    console.log(clicked, "clicked");
   }
 
   // clears the tab header

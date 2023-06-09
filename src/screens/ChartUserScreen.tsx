@@ -29,8 +29,6 @@ const ChartUserScreen = () => {
     temperatures.push(temp);
   })
   
-  console.log(temperatures);
-  
   return (
     
 <LinearGradient colors={['#C33764','#1D2671']} style={{flex:1}}>

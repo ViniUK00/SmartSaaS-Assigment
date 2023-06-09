@@ -8,7 +8,6 @@ export const getWeather = async (lat: number, lng: number ) => {
   try {
     const response = await axios.get(URL);
     const data = response.data;
-    console.log(data);
     return data;
   } catch (error) {  
     throw error;
@@ -20,7 +19,6 @@ export const getWeather = async (lat: number, lng: number ) => {
     try {
       const response = await axios.get(URL);
       const data = response.data;
-      console.log( 'hehhehe', data);
       return data;
     } catch (error) {
       console.log(error);    

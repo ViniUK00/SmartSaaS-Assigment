@@ -17,7 +17,6 @@ const About = () => {
   const user = useSelector(selectSelectedCurrentUser);
   const [lat, setLat] = useState();
   const [ lon, setLon] = useState();
-  console.log(user);
   
   const navigation = useNavigation<any>();
     useLayoutEffect(()=>{

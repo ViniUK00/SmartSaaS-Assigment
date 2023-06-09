@@ -19,6 +19,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import axios from "axios";
 import { usePostWeather } from "../hooks/usePostWeather";
 import ButtonGenerate from "../components/ButtonGenerate";
+import fetchUserData, { url } from "../../api/fetchUserData";
+import { postUserTimeSerries } from "../../api/postUserTimeSerries";
 
 type UserObjectData = {
   id: string
@@ -49,6 +51,7 @@ const ShowUsers: React.FC = () =>{
   const { showResetComponent } = useSelector((state:any)=>state.changeUser);
   const dispatch = useDispatch();
   const [userDataObject,setUserDataObject] = useState<any>();
+  const [generatedUsers, setGeneratedUsers] = useState<any>();
 
 
   useEffect(()=>{
@@ -102,7 +105,6 @@ const ShowUsers: React.FC = () =>{
         const currentUserId = usersData[currentUserIndex].uid;
         dispatch(userId(currentUserId));
         dispatch(changeUser(actionType));
-        console.log("Current state:", changeUserState);
         dispatch(setUserObject(usersData[currentUserIndex]))
         setPreviousRegion({latitude: usersData[currentUserIndex].address.coordinates.lat,
           longitude: usersData[currentUserIndex].address.coordinates.lng,
@@ -136,6 +138,8 @@ const ShowUsers: React.FC = () =>{
 
     useEffect(() => {
       const fetchWeather = async () => {
+        
+
         try {
           const random= (max:number, min:number) => Math.random() * (max - min) + min;
           const lat = usersData?.[currentUserIndex]?.address?.coordinates?.lat + random(1, 5);;
@@ -168,13 +172,47 @@ const ShowUsers: React.FC = () =>{
         } catch (error) {
           console.log(error);
         }
+        
       };
+      
       fetchWeather();
     }, [usersData?.[currentUserIndex]]);
     
        // atomic
        usePostUserAtom(userDataObject, weatherType)
        usePostWeather(weatherData)
+
+       const random = (max: number, min: number) => Math.random() * (max - min) + min;
+
+       const handleGenerateClick = async () => {
+        try {
+          const data = await fetchUserData(url);
+    
+          const generatedData = await Promise.all(
+            data.map(async (user: { address: { coordinates: { lat: number; lng: number; }; }; id: any; }) => {
+              const lat = user.address.coordinates.lat + random(1, 5);
+              const lng = user.address.coordinates.lng + random(1, 5);
+              const weatherData = await getWeather(lat, lng);
+    
+              const weatherMain = weatherData.current.weather[0].main;
+    
+              return {
+                id: user.id,
+                lat: lat,
+                lng: lng,
+                weather: weatherMain,
+              };
+            })
+          );
+    
+          setGeneratedUsers(generatedData);
+          postUserTimeSerries(generatedData);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      
+      
       
 
     //usePostUserInfo(usersData?.[currentUserIndex], weatherData?.current.weather[0].main);
@@ -183,12 +221,6 @@ const ShowUsers: React.FC = () =>{
     // TODO object.entries READ
     // TODO Look up reduce
 
-
-    const handleGenerateClick = () => {
-      for (let i=0; i<10; i++) {
-        
-      }
-    }
     
     
 
@@ -217,9 +249,6 @@ const ShowUsers: React.FC = () =>{
       }).start();
     }, [region]);
     
-
-    console.log(region.latitude);
-    console.log(previousRegion.latitude);    
     
 
     return (

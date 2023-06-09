@@ -171,7 +171,6 @@ const HomeScreen = () => {
         shadowOpacity:0.4
       },}}
         onPress={(data, details = null) => {
-          console.log('hey 2', details?.geometry.location);
           
           dispatch(
             setSelectedPlace({
