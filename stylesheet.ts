@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft:20
-
+        paddingLeft:20,
+        zIndex:1
       },
       searchBarContainer: {
         flex: 1,

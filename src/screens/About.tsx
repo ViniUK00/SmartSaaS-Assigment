@@ -1,14 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useLayoutEffect } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
+import React, { useLayoutEffect, useState } from 'react';
+import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
+import Button from '../components/ButtonSmartSaaS';
+import { AntDesign } from '@expo/vector-icons';
 
 type RootStackParamList = {
     About: undefined;
     UserProfile: undefined;
     Main:undefined;
+    PredictionsInitialScreen:undefined;
   };
 
 const About = () => {
@@ -26,6 +28,17 @@ const About = () => {
     
   }
 
+  const handleClickOnPrediction = () => {
+    navigationStack.navigate('PredictionsInitialScreen');
+    
+  }
+
+  const handlePress = () => {
+    console.log("test");
+  };
+
+  const [clicked,setClicked] = useState(false);
+
     
   return (
     <View style={styles.container}>
@@ -37,7 +50,7 @@ const About = () => {
           <Text style={styles.buttonText}>User Profile</Text>
         </LinearGradient>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleClickOnPrediction}>
         <LinearGradient
           colors={['#C33764', '#1D2671']}
           start={{ x: 0, y: 0 }}
@@ -74,5 +87,6 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 24,
     },
+    
   });
   

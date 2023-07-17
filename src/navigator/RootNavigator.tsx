@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 import ChartScreen from '../screens/ChartScreen';
 import ChartUserScreen from '../screens/ChartUserScreen';
 import UserProfile from '../screens/UserProfile';
+import PredictionsInitialScreen from '../screens/PredictionsInitialScreen';
 
 
 export type RootStackParamList = {
@@ -15,6 +16,7 @@ export type RootStackParamList = {
     ChartUserScreen:undefined;
     Search:undefined;
     UserProfile:undefined;
+    PredictionsInitialScreen:undefined;
 }
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -54,6 +56,15 @@ const RootNavigator = () => {
         options={{
           headerShown: true,
         }}
+        
+      />
+      <RootStack.Screen
+        name='PredictionsInitialScreen'
+        component={PredictionsInitialScreen}
+        options={{
+          headerShown: false,
+        }}
+        
       />
 
       </RootStack.Group>

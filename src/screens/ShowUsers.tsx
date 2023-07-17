@@ -217,9 +217,6 @@ const ShowUsers: React.FC = () =>{
 
     //usePostUserInfo(usersData?.[currentUserIndex], weatherData?.current.weather[0].main);
     //usePostUserAtom(usersData?.[currentUserIndex], weatherData?.current.weather[0].main);
-    // TODO Change to callback method on handling user post
-    // TODO object.entries READ
-    // TODO Look up reduce
 
     
     

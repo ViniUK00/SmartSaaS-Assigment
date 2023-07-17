@@ -5,7 +5,7 @@ import * as Animatable from 'react-native-animatable';
 
 interface ButtonProps {
   onPress: () => void;
-  buttonText: string;
+  buttonText?: string;
   disabled?: boolean;
   icon?: JSX.Element | string;
   defaultColor?: string;
@@ -84,8 +84,8 @@ const mobileWidth = width * 0.8
 
 const styles = StyleSheet.create({
   button: {
-    maxWidth: 300,
-    maxHeight: 40,
+    minWidth:150,
+    minHeight:50,
     width: '100%',
     borderRadius: 17,
     flexDirection: 'row',

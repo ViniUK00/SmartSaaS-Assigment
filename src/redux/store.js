@@ -5,6 +5,8 @@ import userReducer from '../redux/userSlice';
 import locationReducer from './locationSlice';
 import userApiReducer from './userApiSlice';
 import currentUserReducer from './currentUserSlice';
+import ItemReducer from './dropdownPickerValue';
+
 
 const logUserId = (store) => (next) => (action) => {
   if (action.type === 'changeUser/changeUserReduc') {
@@ -27,7 +29,8 @@ export default configureStore({
     user: userReducer,
     location: locationReducer,
     userAPI: userApiReducer,
-    currentUser: currentUserReducer
+    currentUser: currentUserReducer,
+    item: ItemReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat(logUserId),

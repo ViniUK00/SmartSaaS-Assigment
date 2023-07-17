@@ -124,10 +124,7 @@ const navigation = useNavigation<any>();
         console.error('Error fetching users', error);
       }
     };
-
-    // calling once
-    //TODO onPickerOpen reload the dropdown
-    //TODO search through the list
+    
     useEffect(() => {
       fetchUsers();
   }, [reload]);
